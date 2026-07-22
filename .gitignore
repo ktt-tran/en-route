@@ -3,6 +3,7 @@
 EN-ROUTE/
 backend/
 docker/
+troubleshoot.txt
 
 # dependencies
 node_modules/
