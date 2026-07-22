@@ -1,8 +1,10 @@
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
+EN-ROUTE-DEV/
+backend/
+docker/
+
 # dependencies
-production.txt
-techstack.txt
 node_modules/
 
 # Expo

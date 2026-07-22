@@ -14,11 +14,7 @@ export default function TabsLayout() {
         options={{
           title: "Map",
           tabBarIcon: ({color}) => (
-            <Ionicons
-              name="map"
-              size={24}
-              color={color}
-            />
+            <Ionicons name="map" size={24} color={color}/>
           ),
         }}
       />
@@ -28,11 +24,7 @@ export default function TabsLayout() {
         options={{
           title: "History",
           tabBarIcon: ({color}) => (
-            <Ionicons
-              name="time"
-              size={24}
-              color={color}
-            />
+            <Ionicons name="bookmarks" size={24} color={color}/>
           ),
         }}
       />

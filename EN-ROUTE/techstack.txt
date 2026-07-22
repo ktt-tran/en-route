@@ -1,0 +1,55 @@
+Phase 1 (MVP)
+
+This is all you need to build and ship the app.
+
+Layer	Technology	Purpose
+Mobile	            React Native + Expo + TypeScript	    Cross-platform iOS/Android app
+Navigation	        React Navigation	                    Screen navigation (likely just one main screen)
+State Management	Zustand	                                Store current trip, location, route state
+Server State	    TanStack Query	                        Cache API responses from your backend
+Map Rendering	    MapLibre GL	                            Display the map
+Map Data	        OpenStreetMap	                        Free map data
+Location	        Expo Location	                        GPS and user location
+Search / Geocoding	Nominatim (or a hosted geocoder later)	Convert addresses to coordinates
+Backend	            FastAPI (Python)	                    Business logic and APIs
+Routing Engine	    Valhalla	                            Calculate routes
+Database (Device)	SQLite	                                Recent trips, saved places, settings
+Database (Server)	None initially	                        Not needed for the MVP
+AI	                None	                                Add later
+Authentication	    None	                                No accounts initially
+Hosting	            Docker + a cloud VM	                    Host FastAPI and Valhalla
+
+
+The complete roadmap
+Phase 1
+React Native + TypeScript + Expo
+MapLibre + OpenStreetMap
+FastAPI
+Valhalla
+SQLite (local only)
+Docker
+
+Phase 2
+Checkpoints
+Route optimization
+
+Phase 3
+Vehicle profiles
+Fuel optimization
+Gas price integration
+
+Phase 4
+PostgreSQL + PostGIS
+Supabase Auth
+Redis
+Cloud sync
+One small adjustment I'd make
+
+
+That gives you an MVP that's surprisingly lean:
+
+Frontend: React Native + Expo + TypeScript
+Maps: MapLibre + OpenStreetMap
+Backend: FastAPI + Valhalla
+Local Storage: SQLite
+Deployment: Docker on a cloud VM

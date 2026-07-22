@@ -1,75 +1,53 @@
 import {
-    FlatList,
-    Pressable,
-    Text,
-    View
+  FlatList,
+  Pressable,
+  Text,
+  View,
 } from "react-native";
 
 import { router } from "expo-router";
 
-
 const trips = [
   {
-    id:"1",
-    destination:"Washington DC",
-    date:"Today"
+    id: "1",
+    destination: "Washington DC",
+    date: "Today",
   },
   {
-    id:"2",
-    destination:"Philadelphia",
-    date:"Yesterday"
-  }
+    id: "2",
+    destination: "Philadelphia",
+    date: "Yesterday",
+  },
 ];
 
-
-export default function HistoryScreen(){
-
+export default function HistoryScreen() {
   return (
+    <View className="flex-1 p-5 bg-white">
 
-    <View style={{
-      flex:1,
-      padding:20
-    }}>
-
-      <Text style={{
-        fontSize:28,
-        fontWeight:"bold"
-      }}>
+      <Text className="text-3xl font-bold mb-5">
         Trip History
       </Text>
 
-
       <FlatList
         data={trips}
-        keyExtractor={(item)=>item.id}
-        renderItem={({item})=>(
-
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
           <Pressable
-            onPress={()=>
-              router.push(`/trip/${item.id}`)
-            }
-            style={{
-              padding:20,
-              backgroundColor:"#eee",
-              marginTop:15,
-              borderRadius:12
-            }}
+            onPress={() => router.push(`/trip/${item.id}`)}
+            className="p-5 bg-gray-100 mt-4 rounded-xl"
           >
-
-            <Text>
+            <Text className="text-lg font-semibold">
               {item.destination}
             </Text>
 
-            <Text>
+            <Text className="text-gray-500 mt-1">
               {item.date}
             </Text>
 
           </Pressable>
-
         )}
       />
 
     </View>
-
   );
 }

@@ -1,76 +1,21 @@
-import {
-    Pressable,
-    StyleSheet,
-    Text,
-    View
-} from "react-native";
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { router } from "expo-router";
+// 👇 THIS IS WHERE YOU IMPORT IT
+// The path uses '../../' to climb out of 'app/(tabs)/' and reach the 'components/' folder.
+import MapComponent from '../../components/MapComponent';
 
-
-export default function MapScreen() {
-
+export default function Map() {
   return (
     <View style={styles.container}>
-
-      <Text style={styles.title}>
-        En Route
-      </Text>
-
-
-      <View style={styles.mapPlaceholder}>
-        <Text>
-          Map View
-        </Text>
-      </View>
-
-
-      <Pressable
-        style={styles.button}
-        onPress={() => router.push("/search")}
-      >
-        <Text style={styles.buttonText}>
-          Search Destination
-        </Text>
-      </Pressable>
-
-
+      {/* Metro renders the native file on phones, and the web file on browsers */}
+      <MapComponent />
     </View>
   );
 }
 
-
 const styles = StyleSheet.create({
-
-  container:{
-    flex:1,
-    padding:20,
-    gap:20
+  container: {
+    flex: 1,
   },
-
-  title:{
-    fontSize:28,
-    fontWeight:"bold"
-  },
-
-  mapPlaceholder:{
-    flex:1,
-    backgroundColor:"#ddd",
-    justifyContent:"center",
-    alignItems:"center",
-    borderRadius:20
-  },
-
-  button:{
-    backgroundColor:"black",
-    padding:18,
-    borderRadius:12,
-    alignItems:"center"
-  },
-
-  buttonText:{
-    color:"white",
-    fontWeight:"bold"
-  }
-
 });
