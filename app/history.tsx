@@ -24,7 +24,7 @@ export default function HistoryScreen() {
   return (
     <View className="flex-1 p-5 bg-white">
 
-      <Text className="text-3xl font-bold mb-5">
+      <Text className="mt-20 text-3xl font-bold mb-5">
         Trip History
       </Text>
 

@@ -3,13 +3,10 @@ import "../src/styles/index.css";
 
 export default function RootLayout() {
   return (
-    <Stack>
-      <Stack.Screen 
-        name="(tabs)"
-        options={{
-          headerShown:false
-        }}
-      />
-    </Stack>
+    <Stack
+      screenOptions={{
+        headerShown: false,
+      }}
+    />
   );
 }
