@@ -1,5 +1,11 @@
+import { Coordinate } from "./coordinates";
+
+
 export interface Location {
-  latitude: number;
-  longitude: number;
-  name?: string;
+  coordinate: Coordinate;
+  accuracy?: number;
+  altitude?: number;
+  speed?: number;
+  heading?: number;
+  timestamp: number;
 }

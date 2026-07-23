@@ -1,17 +1,23 @@
-import { Location } from "@/src/types/location";
+import { Coordinate } from "@/src/types/coordinates";
+
 
 export interface Trip {
-  id: string;
 
-  origin: Location;
+  id:string;
 
-  destination: Location;
+  origin:{
+    name?:string;
+    coordinate:Coordinate;
+  };
 
-  checkpoints: Location[];
+  destination:{
+    name?:string;
+    coordinate:Coordinate;
+  };
 
-  distance: number;
-
-  duration: number;
-
-  createdAt: string;
+  distance:number;
+  duration:number;
+  route?:Coordinate[];
+  createdAt:string;
+  fuelRangeAtStart?:number;
 }

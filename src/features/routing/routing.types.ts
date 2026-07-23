@@ -1,9 +1,24 @@
-import { Location } from "@/src/types/location";
+import { Coordinate } from "@/src/types/coordinates";
 
 export interface Route {
-  coordinates: Location[];
+  id:string;
+  geometry:Coordinate[];
+  distance:number;
+  duration:number;
+  legs:RouteLeg[];
 
-  distance: number;
+}
 
-  duration: number;
+export interface RouteLeg {
+  distance:number;
+  duration:number;
+  maneuvers:Maneuver[];
+}
+
+
+export interface Maneuver {
+  instruction:string;
+  type:string;
+  distance:number;
+  coordinate:Coordinate;
 }
