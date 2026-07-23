@@ -1,9 +1,5 @@
-import {
-  FlatList,
-  Pressable,
-  Text,
-  View,
-} from "react-native";
+import HistoryControls from "@/src/components/history/HistoryControls";
+import { FlatList, Pressable, Text, View } from "react-native";
 
 import { router } from "expo-router";
 
@@ -22,9 +18,9 @@ const trips = [
 
 export default function HistoryScreen() {
   return (
-    <View className="flex-1 p-5 bg-white">
+    <View className="flex-1 relative bg-white p-5">
 
-      <Text className="mt-20 text-3xl font-bold mb-5">
+      <Text className="mt-20 text-3xl text-primary font-bold mb-5">
         Trip History
       </Text>
 
@@ -47,7 +43,7 @@ export default function HistoryScreen() {
           </Pressable>
         )}
       />
-
+      <HistoryControls />
     </View>
   );
 }
