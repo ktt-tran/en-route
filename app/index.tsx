@@ -5,7 +5,7 @@ import { View } from "react-native";
 
 export default function MapScreen() {
   return (
-    <View style={{ flex: 1 }}>
+    <View className="flex-1 relative">
       <MapComponent />
       <MapSearchBar />
       <MapControls />

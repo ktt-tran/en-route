@@ -7,9 +7,9 @@ export default function SearchPage(){
 
   return (
     <View className="flex-1 relative bg-white">
-
+      
       <View className="p-5">
-        <Text className="mt-20 text-3xl text-primary font-bold mb-5">
+        <Text className="mt-12 text-3xl text-primary font-bold mb-5">
           En Route
         </Text>
 
