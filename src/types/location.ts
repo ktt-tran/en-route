@@ -1,6 +1,5 @@
 import { Coordinate } from "./coordinates";
 
-
 export interface Location {
   coordinate: Coordinate;
   accuracy?: number;

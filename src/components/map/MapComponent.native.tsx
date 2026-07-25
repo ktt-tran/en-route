@@ -1,46 +1,20 @@
-// import { Camera, Map } from '@maplibre/maplibre-react-native';
-// import React from 'react';
-
-// export default function MapComponent() {
-//   return (
-//     <Map style={{ flex: 1 }} mapStyle="https://maplibre.org">
-//       <Camera initialViewState={{ zoom: 12, center: [xx,xx] }} />
-//     </Map>
-//   );
-// }
-
-import * as Location from "expo-location";
-import { useEffect, useState } from "react";
+import { UserLocation } from "@/src/features/location/location.types";
 import MapView from "react-native-maps";
 
-export default function MapComponent() {
-  const [location, setLocation] = useState<any>(null);
+type MapComponentProps = {
+  userLocation : UserLocation | null;
+};
 
-  useEffect(() => {
-    async function getLocation() {
-      const permission =
-        await Location.requestForegroundPermissionsAsync();
-
-      if (permission.status !== "granted") return;
-
-      const current =
-        await Location.getCurrentPositionAsync({});
-
-      setLocation(current.coords);
-    }
-
-    getLocation();
-  }, []);
-
+export default function MapComponent({userLocation}: MapComponentProps) {
   return (
     <MapView
       style={{ flex: 1 }}
       showsUserLocation
       region={
-        location
+        userLocation
           ? {
-              latitude: location.latitude,
-              longitude: location.longitude,
+              latitude: userLocation?.coordinate.latitude,
+              longitude: userLocation?.coordinate.longitude,
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
             }
