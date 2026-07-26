@@ -4,6 +4,7 @@ EN-ROUTE/
 backend/
 docker/
 troubleshoot.txt
+src/features/constants/
 
 # dependencies
 node_modules/

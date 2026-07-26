@@ -1,6 +1,16 @@
 import GoButton from "@/src/components/search/GoButton";
+import { useSearch } from "@/src/features/search/useSearch";
 import { router } from "expo-router";
+import { useState } from 'react';
 import { Pressable, Text, TextInput, View } from "react-native";
+
+const [query, setQuery] = useState("");
+
+const {
+  results,
+  loading,
+  error,
+} = useSearch(query);
 
 
 export default function SearchPage(){
@@ -16,13 +26,14 @@ export default function SearchPage(){
 
         <TextInput
           placeholder="Where to?"
+          value={query}
+          onChangeText={setQuery}
           style={{
             borderWidth:1,
             padding:15,
             borderRadius:10
           }}
         />
-
 
         <Pressable
           onPress={()=>{
@@ -38,7 +49,7 @@ export default function SearchPage(){
           <Text style={{
             color:"white"
           }}>
-            Set Destination
+            Where to?
           </Text>
 
         </Pressable>

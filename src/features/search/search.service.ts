@@ -1,10 +1,24 @@
-import { SearchQuery, SearchResult } from "../search/search.types";
-import * as GeocodingService from "./geocoding.service";
+import { API_BASE_URL } from "@/src/constants/config";
+import { SearchResult } from "./search.types";
 
-export async function searchPlaces(query: SearchQuery): Promise<SearchResult[]> {
-    const result = await GeocodingService.queryToGeocode(query);
-    if (!result) {
-        return [];
-    }
-    return[result];
+const SEARCH_URL = `${API_BASE_URL}/search`;
+
+export async function searchPlaces(
+  query: string
+): Promise<SearchResult[]> {
+  if (!query.trim()) {
+    return [];
+  }
+
+  const response = await fetch(
+    `${SEARCH_URL}?q=${encodeURIComponent(query)}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to search places.");
+  }
+
+  const results: SearchResult[] = await response.json();
+
+  return results;
 }
