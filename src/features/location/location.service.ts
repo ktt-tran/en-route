@@ -1,7 +1,7 @@
 import * as Location from "expo-location";
 import { UserLocation } from "./location.types";
 
-export  async function requestPermission() {
+export async function requestPermission() {
   return await Location.requestForegroundPermissionsAsync();
 }
 

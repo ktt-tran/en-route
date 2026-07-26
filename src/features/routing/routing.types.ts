@@ -1,7 +1,7 @@
 import { Coordinate } from "@/src/types/coordinates";
 
 export interface Route {
-  id:string;
+  id?:string;
   geometry:Coordinate[];
   distance:number;
   duration:number;
