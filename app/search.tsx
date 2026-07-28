@@ -50,7 +50,7 @@ export default function SearchPage(){
           )
         )}
 
-        <ScrollView className="mt-15">
+        <ScrollView className="h-3/4 mt-15">
           { results.map((result) => (
             <Pressable key={`${result.coordinate.latitude}-${result.coordinate.longitude}`} className="py-12 border-b border-[#ddd]"
               onPress={() => {
@@ -65,7 +65,7 @@ export default function SearchPage(){
         </ScrollView>
       </View>
     
-    {query.length == 0 && <GoButton />}
+    {query.length > 0 && <GoButton />}
     </View>
 
   );

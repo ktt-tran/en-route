@@ -2,6 +2,38 @@ import httpx
 from app.schemas.search import SearchResult, Address, Coordinate
 from app.config import NOMINATIM_URL
 
+# Retrieve JOSN parsed data from Nominatim
+async def search_retriever(endpoint: str, params: dict) -> dict | list:
+    async with httpx.AsyncClient() as client:
+        response = await client.get(
+            f"{NOMINATIM_URL}/{endpoint}",
+            params=params,
+        )
+
+    print(response)
+    response.raise_for_status()
+    return response.json()
+
+# Build the SearchResult object using the JSON parsed dictionary
+def _to_search_result(place: dict) -> SearchResult:
+    address = place.get("address", {})
+    return SearchResult(
+        name=place.get("display_name", ""),
+        address=Address(
+            street=address.get("road"),
+            city=address.get("city") or address.get("town") or address.get("village"),
+            state=address.get("state"),
+            postalCode=address.get("postcode"),
+            country=address.get("country"),
+            formatted=place.get("display_name"),
+        ),
+        coordinate=Coordinate(
+            latitude=float(place["lat"]),
+            longitude=float(place["lon"]),
+        ),
+    )
+
+# Search places using location name
 async def search_places(query: str) -> list[SearchResult]:
     params = {
         "q": query,
@@ -10,67 +42,26 @@ async def search_places(query: str) -> list[SearchResult]:
         "limit": 5,
     }
 
-    async with httpx.AsyncClient() as client:
-        response = await client.get(
-            f"{NOMINATIM_URL}/search",
-            params=params,
-        )
-
-    print(response)
-
-    response.raise_for_status()
-
-    data = response.json()
+    data = await search_retriever("search", params)
 
     results = []
 
     for place in data:
-        results.append(
-            {
-                "name": place.get("display_name"),
-                "address": place.get("address", {}),
-                "coordinate": {
-                    "latitude": float(place["lat"]),
-                    "longitude": float(place["lon"]),
-                },
-            }
-        )
+        results.append(_to_search_result(place))
 
     return results
 
-async def reverse_geocode(latitude: float, longitude: float) -> list[SearchResult]:
+# Search places using geocode
+async def reverse_geocode(latitude: float, longitude: float) -> SearchResult:
     params = {
         "lat": latitude,
         "lon": longitude,
         "format": "jsonv2",
         "addressdetails": 1,
-        "limit": 5,
     }
 
-    async with httpx.AsyncClient() as client:
-        response = await client.get(
-            f"{NOMINATIM_URL}/reverse",
-            params=params,
-        )
+    address = await search_retriever("reverse", params)
 
-    print(response)
+    result = _to_search_result(address)
 
-    response.raise_for_status()
-
-    data = response.json()
-
-    results = []
-
-    for place in data:
-        results.append(
-            {
-                "name": place.get("display_name"),
-                "address": place.get("address", {}),
-                "coordinate": {
-                    "latitude": float(place["lat"]),
-                    "longitude": float(place["lon"]),
-                },
-            }
-        )
-
-    return results
+    return result
