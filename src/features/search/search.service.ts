@@ -10,15 +10,17 @@ export async function searchPlaces(
     return [];
   }
 
-  const response = await fetch(
-    `${SEARCH_URL}?q=${encodeURIComponent(query)}`
-  );
+  try {
+    const response = await fetch(`${SEARCH_URL}?query=${encodeURIComponent(query)}`);
 
-  if (!response.ok) {
-    throw new Error("Failed to search places.");
+    if (!response.ok) {
+      throw new Error("Failed to search places.");
+    }
+
+    const results: SearchResult[] = await response.json();
+    
+    return results;
+  } catch(error) {
+    throw error;
   }
-
-  const results: SearchResult[] = await response.json();
-
-  return results;
 }

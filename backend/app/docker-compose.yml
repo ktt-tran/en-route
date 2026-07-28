@@ -1,0 +1,15 @@
+services:
+  nominatim:
+    image: mediagis/nominatim:5.1
+    container_name: enroute-nominatim
+    ports:
+      - "8080:8080"
+    environment:
+      PBF_PATH: /nominatim/data/maryland-latest.osm.pbf
+      THREADS: 4
+    volumes:
+      - ../../map-data:/nominatim/data
+      - nominatim-data:/var/lib/postgresql/16/main
+    restart: unless-stopped
+volumes:
+  nominatim-data:

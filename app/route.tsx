@@ -1,10 +1,11 @@
 import EndButton from "@/src/components/route/EndButton";
 import { useLocalSearchParams } from "expo-router";
-import { Text, View } from "react-native";
+import { Text, View, useWindowDimensions } from "react-native";
 
 
 export default function TripRoute(){
   const {id}=useLocalSearchParams();
+  const { height } = useWindowDimensions();
 
   return (
     <View className="flex-1 relative bg-white">
