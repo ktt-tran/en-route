@@ -1,4 +1,5 @@
 from app.schemas.search import SearchResult, Address, Coordinate
+from app.config import API_BASE_URL
 
 async def search_places(query: str) -> list[SearchResult]:
     """
