@@ -1,5 +1,5 @@
 import { Coordinate } from "@/src/types/coordinates";
-import { Location } from "@/src/types/location";
+import { UserLocation } from "../location/location.types";
 import { Maneuver } from "../routing/routing.types";
 
 export interface NavigationSession {
@@ -23,7 +23,7 @@ export interface MapMatchingResult {
 }
 
 export interface NavigationUpdate {
-  location:Location;
+  location:UserLocation;
   progress:RouteProgress;
   nextManeuver?:Maneuver;
 }

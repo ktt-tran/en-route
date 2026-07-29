@@ -1,7 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
 from app.routes import search
-from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="En Route API")
 

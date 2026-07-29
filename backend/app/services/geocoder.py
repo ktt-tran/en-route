@@ -2,7 +2,7 @@ import httpx
 from app.schemas.search import SearchResult, Address, Coordinate
 from app.config import NOMINATIM_URL
 
-# Retrieve JOSN parsed data from Nominatim
+# Retrieve JOSN parsed data from Nominatim.
 async def search_retriever(endpoint: str, params: dict) -> dict | list:
     async with httpx.AsyncClient() as client:
         response = await client.get(
@@ -14,7 +14,7 @@ async def search_retriever(endpoint: str, params: dict) -> dict | list:
     response.raise_for_status()
     return response.json()
 
-# Build the SearchResult object using the JSON parsed dictionary
+# Build the SearchResult object using a JSON parsed dictionary.
 def _to_search_result(place: dict) -> SearchResult:
     address = place.get("address", {})
     return SearchResult(
@@ -33,7 +33,7 @@ def _to_search_result(place: dict) -> SearchResult:
         ),
     )
 
-# Search places using location name
+# Search places using location name and details.
 async def search_places(query: str) -> list[SearchResult]:
     params = {
         "q": query,
@@ -51,7 +51,7 @@ async def search_places(query: str) -> list[SearchResult]:
 
     return results
 
-# Search places using geocode
+# Search places using geocode.
 async def reverse_geocode(latitude: float, longitude: float) -> SearchResult:
     params = {
         "lat": latitude,

@@ -1,7 +1,7 @@
+import "@/src/styles/index.css";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { Stack } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import "../src/styles/index.css";
 
 export default function RootLayout() {
   return (

@@ -1,19 +1,17 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
-
+.claude/
 EN-ROUTE/
-backend/__pycache__
+map-data/maryland-latest.osm.pbf
+AGENTS.md
+CLAUDE.md
+capture.txt
+backend/app/__pycache__
 backend/app/config.py
-backend/app/docker-compose.yml
-backend/app/__pycache__
-backend/app/__pycache__
+backend/app/models/__pycache__
 backend/app/routes/__pycache__
 backend/app/schemas/__pycache__
 backend/app/services/__pycache__
 backend/venv/
 src/constants/
-map-data/maryland-latest.osm.pbf
-photon-1.2.1/
-requirements.txt
 
 # dependencies
 node_modules/
