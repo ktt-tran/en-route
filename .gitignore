@@ -1,17 +1,20 @@
 .claude/
-EN-ROUTE/
-map-data/maryland-latest.osm.pbf
-AGENTS.md
-CLAUDE.md
-capture.txt
 backend/app/__pycache__
-backend/app/config.py
+backend/app/api/__pycache__
 backend/app/models/__pycache__
-backend/app/routes/__pycache__
 backend/app/schemas/__pycache__
 backend/app/services/__pycache__
 backend/venv/
-src/constants/
+docker/valhalla/data/tiles/
+docker/valhalla/data/tiles.tar
+docker/valhalla/data/admins.sqlite
+docker/valhalla/data/timezones.sqlite
+EN-ROUTE/
+map-data/maryland-latest.osm.pbf
+scripts/build-valhalla.sh
+AGENTS.md
+CLAUDE.md
+capture.txt
 
 # dependencies
 node_modules/
@@ -44,7 +47,7 @@ yarn-error.*
 *.pem
 
 # local env files
-.env*.local
+.env
 
 # typescript
 *.tsbuildinfo

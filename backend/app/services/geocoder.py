@@ -1,12 +1,13 @@
 import httpx
-from app.schemas.search import SearchResult, Address, Coordinate
-from app.config import NOMINATIM_URL
+from app.schemas.search import SearchResult, Address
+from app.schemas.coordinates import Coordinates
+from app.config import settings
 
 # Retrieve JOSN parsed data from Nominatim.
 async def search_retriever(endpoint: str, params: dict) -> dict | list:
     async with httpx.AsyncClient() as client:
         response = await client.get(
-            f"{NOMINATIM_URL}/{endpoint}",
+            f"{settings.nominatim_url}/{endpoint}",
             params=params,
         )
 
@@ -27,7 +28,7 @@ def _to_search_result(place: dict) -> SearchResult:
             country=address.get("country"),
             formatted=place.get("display_name"),
         ),
-        coordinate=Coordinate(
+        coordinate=Coordinates(
             latitude=float(place["lat"]),
             longitude=float(place["lon"]),
         ),

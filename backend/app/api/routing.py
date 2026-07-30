@@ -1,15 +1,19 @@
 from fastapi import APIRouter
 from app.schemas.route import RouteRequest
+from app.services.valhalla import ValhallaService
+from app.config import settings
 
 router = APIRouter()
 
-valhalla = ValhallaService("http://localhost:8002")
+valhalla = ValhallaService(settings.valhalla_url)
 
 @router.post("/routes")
-async def create_route(request: RouteRequest):
-    result = await valhalla.route(
+async def route(request: RouteRequest):
+    result = await valhalla.create_route(
         request.origin,
         request.destination,
+        request.mode,
+
     )
 
     return result

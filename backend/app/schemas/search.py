@@ -1,6 +1,5 @@
 from pydantic import BaseModel
-from coordinates import Coordinates
-
+from .coordinates import Coordinates
 
 class Address(BaseModel):
     street: str | None = None

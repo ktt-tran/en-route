@@ -1,14 +1,21 @@
 import httpx
 from app.schemas.coordinates import Coordinates
+from app.schemas.route import TransportationMode
+
+VALHALLA_COSTING = {
+    TransportationMode.AUTO: "auto",
+    TransportationMode.WALKING: "pedestrian",
+    TransportationMode.BICYCLING: "bicycle",
+}
 
 class ValhallaService:
 
     def __init__(self, base_url: str):
         self.base_url = base_url
 
-    async def route(self, origin: Coordinates, destination: Coordinates):
+    async def create_route(self, origin: Coordinates, destination: Coordinates, mode: TransportationMode):
         payload = {
-            "location": [
+            "locations": [
                 {
                     "lat": origin.latitude,
                     "lon": origin.longitude,
@@ -18,7 +25,7 @@ class ValhallaService:
                     "lon": destination.longitude,
                 },
             ],
-            "costing": "auto",
+            "costing": VALHALLA_COSTING[mode],
             "units": "miles",
         }
 

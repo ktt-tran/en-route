@@ -1,7 +1,12 @@
-import { API_BASE_URL } from "@/src/constants/config";
 import { SearchResult } from "./search.types";
 
-const SEARCH_URL = `${API_BASE_URL}/search`;
+const API_URL = process.env.EXPO_PUBLIC_API_URL;
+
+if (!API_URL) {
+  throw new Error("EXPO_PUBLIC_API_URL is not configured");
+}
+
+const SEARCH_URL = `${API_URL}/search`;
 
 export async function searchPlaces(
   query: string
