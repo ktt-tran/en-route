@@ -1,8 +1,5 @@
 from pydantic import BaseModel
-
-class Coordinate(BaseModel):
-    latitude: float
-    longitude: float
+from coordinates import Coordinates
 
 
 class Address(BaseModel):
@@ -17,4 +14,4 @@ class Address(BaseModel):
 class SearchResult(BaseModel):
     name: str
     address: Address
-    coordinate: Coordinate
+    coordinate: Coordinates

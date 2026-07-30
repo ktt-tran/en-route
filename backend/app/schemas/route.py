@@ -1,7 +1,7 @@
 from pydantic import BaseModel
-from search import Coordinate
+from coordinates import Coordinates
 
 class RouteRequest(BaseModel):
-    origin: Coordinate
-    destination: Coordinate
+    origin: Coordinates
+    destination: Coordinates
     
