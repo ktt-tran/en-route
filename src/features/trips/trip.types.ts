@@ -1,4 +1,4 @@
-import { Coordinate } from "@/src/types/coordinates";
+import { Coordinates } from "@/src/types/coordinates";
 
 
 export interface Trip {
@@ -7,17 +7,17 @@ export interface Trip {
 
   origin:{
     name?:string;
-    coordinate:Coordinate;
+    coordinate:Coordinates;
   };
 
   destination:{
     name?:string;
-    coordinate:Coordinate;
+    coordinate:Coordinates;
   };
 
   distance:number;
   duration:number;
-  route?:Coordinate[];
+  route?:Coordinates[];
   createdAt:string;
   fuelRangeAtStart?:number;
 }

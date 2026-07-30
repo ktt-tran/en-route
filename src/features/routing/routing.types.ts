@@ -1,8 +1,8 @@
-import { Coordinate } from "@/src/types/coordinates";
+import { Coordinates } from "@/src/types/coordinates";
 
 export interface Route {
   id?:string;
-  geometry:Coordinate[];
+  geometry:Coordinates[];
   distance:number;
   duration:number;
   legs:RouteLeg[];
@@ -20,5 +20,5 @@ export interface Maneuver {
   instruction:string;
   type:string;
   distance:number;
-  coordinate:Coordinate;
+  coordinate:Coordinates;
 }

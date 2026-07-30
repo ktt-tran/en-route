@@ -1,6 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
-from app.routes import search
+from app.api import search
 
 app = FastAPI(title="En Route API")
 

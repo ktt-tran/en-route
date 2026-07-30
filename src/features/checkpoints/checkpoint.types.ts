@@ -1,4 +1,4 @@
-import { Coordinate } from "@/src/types/coordinates";
+import { Coordinates } from "@/src/types/coordinates";
 
 export type CheckpointType =
   | "gas"
@@ -10,6 +10,6 @@ export interface Checkpoint {
   id:string;
   name:string;
   type:CheckpointType;
-  coordinate:Coordinate;
+  coordinate:Coordinates;
   order:number;
 }

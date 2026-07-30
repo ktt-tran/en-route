@@ -1,4 +1,4 @@
-import { Coordinate } from "@/src/types/coordinates";
+import { Coordinates } from "@/src/types/coordinates";
 import { UserLocation } from "../location/location.types";
 import { Maneuver } from "../routing/routing.types";
 
@@ -17,7 +17,7 @@ export interface RouteProgress {
 }
 
 export interface MapMatchingResult {
-  snappedLocation:Coordinate;
+  snappedLocation:Coordinates;
   distanceFromRoute:number;
   segmentIndex:number;
 }

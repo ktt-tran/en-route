@@ -1,4 +1,4 @@
-import { Coordinate } from "@/src/types/coordinates";
+import { Coordinates } from "@/src/types/coordinates";
 
 export interface MapRegion {
   latitude: number;
@@ -9,17 +9,17 @@ export interface MapRegion {
 
 export interface MapMarker {
   id: string;
-  coordinate: Coordinate;
+  coordinate: Coordinates;
   title?: string;
   description?: string;
 }
 
 export interface MapRouteLine {
-  coordinates: Coordinate[];
+  coordinates: Coordinates[];
 }
 
 export interface MapCamera {
-  center: Coordinate;
+  center: Coordinates;
   zoom: number;
   heading?: number;
   pitch?: number;

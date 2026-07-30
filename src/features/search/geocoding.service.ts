@@ -1,4 +1,4 @@
-import { Coordinate } from "@/src/types/coordinates";
+import { Coordinates } from "@/src/types/coordinates";
 import * as Location from "expo-location";
 import { SearchQuery, SearchResult } from "./search.types";
 
@@ -21,7 +21,7 @@ export async function queryToGeocode({text}: SearchQuery): Promise<SearchResult 
     };
 }
 
-export async function geocodeToAddress(coords: Coordinate): Promise<SearchResult | null> {
+export async function geocodeToAddress(coords: Coordinates): Promise<SearchResult | null> {
     const result = await Location.reverseGeocodeAsync(coords);
 
     if (!result.length) {

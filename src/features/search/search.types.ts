@@ -1,4 +1,4 @@
-import { Coordinate } from "@/src/types/coordinates";
+import { Coordinates } from "@/src/types/coordinates";
 
 export interface SearchQuery {
   text:string;
@@ -16,5 +16,5 @@ export interface Address {
 export interface SearchResult {
   name: string;
   address: Address;
-  coordinate: Coordinate;
+  coordinate: Coordinates;
 }
