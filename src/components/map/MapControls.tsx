@@ -15,11 +15,7 @@ export default function MapControls({ onCenterUser }: MapControlsProps) {
         onPress={() => router.push("/history")}
         className="bg-primary m-2 rounded-full p-2 shadow-2xl"
       >
-        <MaterialIcons
-          name="history"
-          size={34}
-          color="white"
-        />
+        <MaterialIcons name="history" size={34} color="white" />
       </Pressable>
 
       {/* Center map on user current position */}
@@ -27,11 +23,7 @@ export default function MapControls({ onCenterUser }: MapControlsProps) {
         onPress={onCenterUser}
         className="bg-primary m-2 rounded-full p-2 shadow-2xl"
       >
-        <MaterialIcons
-          name="place"
-          size={34}
-          color="white"
-        />
+        <MaterialIcons name="place" size={34} color="white" />
       </Pressable>
     </View>
   );

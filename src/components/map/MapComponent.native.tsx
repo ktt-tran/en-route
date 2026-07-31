@@ -1,29 +1,37 @@
-import { UserLocation } from "@/src/features/location/location.types";
-import { forwardRef } from "react";
-import MapView from "react-native-maps";
+import { Camera, type CameraRef, Map, UserLocation } from "@maplibre/maplibre-react-native";
+import { forwardRef, useImperativeHandle, useRef } from "react";
+import type { MapComponentProps, MapComponentRef } from "./MapComponent.types";
 
-type MapComponentProps = {
-  userLocation: UserLocation | null;
-};
+const DEFAULT_CENTER: [number, number] = [-76.4702, 38.9559];
 
-const MapComponent = forwardRef<MapView, MapComponentProps>(
+const MapComponent = forwardRef<MapComponentRef, MapComponentProps>(
   ({ userLocation }, ref) => {
+    const cameraRef = useRef<CameraRef>(null);
+
+    useImperativeHandle(ref, () => ({
+      animateToCoordinate: (latitude, longitude, zoom = 16) => {
+        cameraRef.current?.setStop({
+          center: [longitude, latitude],
+          zoom,
+          duration: 500,
+          easing: "fly",
+        });
+      },
+    }));
+
     return (
-      <MapView
-        ref={ref}
-        style={{ flex: 1 }}
-        showsUserLocation
-        initialRegion={
-          userLocation
-            ? {
-                latitude: userLocation.coordinate.latitude,
-                longitude: userLocation.coordinate.longitude,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01,
-              }
-            : undefined
-        }
-      />
+      <Map style={{ flex: 1 }} mapStyle="https://demotiles.maplibre.org/globe.json">
+        <Camera
+          ref={cameraRef}
+          initialViewState={{
+            center: userLocation
+              ? [userLocation.coordinate.longitude, userLocation.coordinate.latitude]
+              : DEFAULT_CENTER,
+            zoom: 14,
+          }}
+        />
+        <UserLocation accuracy />
+      </Map>
     );
   }
 );
