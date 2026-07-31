@@ -24,7 +24,7 @@ export default function MapControls({ onCenterUser }: MapControlsProps) {
 
       {/* Center map on user current position */}
       <Pressable
-        onPress={() => {onCenterUser}}
+        onPress={onCenterUser}
         className="bg-primary m-2 rounded-full p-2 shadow-2xl"
       >
         <MaterialIcons
