@@ -1,6 +1,6 @@
+import { searchPlaces } from "@/src/features/search/search.service";
+import { SearchResult } from "@/src/features/search/search.types";
 import { useEffect, useState } from "react";
-import { searchPlaces } from "./search.service";
-import { SearchResult } from "./search.types";
 
 export function useSearch(query: string) {
   const [results, setResults] = useState<SearchResult[]>([]);

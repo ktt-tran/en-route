@@ -14,7 +14,7 @@ export async function queryToGeocode({text}: SearchQuery): Promise<SearchResult 
         address: {
             formatted: text,
         },
-        coordinate: {
+        coordinates: {
             latitude: result[0].latitude,
             longitude: result[0].longitude,
         },
@@ -46,6 +46,6 @@ export async function geocodeToAddress(coords: Coordinates): Promise<SearchResul
             .filter(Boolean)
             .join(", "),
         },
-        coordinate: coords,
+        coordinates: coords,
     };
 }

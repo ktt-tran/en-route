@@ -16,5 +16,5 @@ export interface Address {
 export interface SearchResult {
   name: string;
   address: Address;
-  coordinate: Coordinates;
+  coordinates: Coordinates;
 }
