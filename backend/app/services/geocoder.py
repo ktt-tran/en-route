@@ -28,7 +28,7 @@ def _to_search_result(place: dict) -> SearchResult:
             country=address.get("country"),
             formatted=place.get("display_name"),
         ),
-        coordinate=Coordinates(
+        coordinates=Coordinates(
             latitude=float(place["lat"]),
             longitude=float(place["lon"]),
         ),

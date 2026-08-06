@@ -9,7 +9,7 @@ const MapComponent = forwardRef<MapComponentRef, MapComponentProps>(
     const cameraRef = useRef<CameraRef>(null);
 
     useImperativeHandle(ref, () => ({
-      animateToCoordinate: (latitude, longitude, zoom = 16) => {
+      animateToCoordinates: (latitude, longitude, zoom = 16) => {
         cameraRef.current?.setStop({
           center: [longitude, latitude],
           zoom,
@@ -20,12 +20,12 @@ const MapComponent = forwardRef<MapComponentRef, MapComponentProps>(
     }));
 
     return (
-      <Map style={{ flex: 1 }} mapStyle="https://demotiles.maplibre.org/globe.json">
+      <Map style={{ flex: 1 }} mapStyle="https://demotiles.maplibre.org/style.json">
         <Camera
           ref={cameraRef}
           initialViewState={{
             center: userLocation
-              ? [userLocation.coordinate.longitude, userLocation.coordinate.latitude]
+              ? [userLocation.coordinates.longitude, userLocation.coordinates.latitude]
               : DEFAULT_CENTER,
             zoom: 14,
           }}

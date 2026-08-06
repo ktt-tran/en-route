@@ -10,7 +10,7 @@ export async function getCurrentLocation(): Promise<UserLocation> {
   const { coords } = location;
 
   return {
-    coordinate: {
+    coordinates: {
         latitude: coords.latitude,
         longitude: coords.longitude
     },
@@ -34,7 +34,7 @@ export async function startWatching(
       const { coords } = location;
 
       callback({
-        coordinate: {
+        coordinates: {
             latitude: coords.latitude,
             longitude: coords.longitude
         },

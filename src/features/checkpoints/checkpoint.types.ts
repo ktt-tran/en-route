@@ -10,6 +10,6 @@ export interface Checkpoint {
   id:string;
   name:string;
   type:CheckpointType;
-  coordinate:Coordinates;
+  coordinates:Coordinates;
   order:number;
 }

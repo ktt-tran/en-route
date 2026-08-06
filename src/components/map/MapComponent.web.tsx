@@ -20,16 +20,16 @@ const MapComponent = forwardRef<MapComponentRef, MapComponentProps>(
 
       const initialCenter: [number, number] = userLocation
         ? [
-            userLocation.coordinate.longitude,
-            userLocation.coordinate.latitude,
+            userLocation.coordinates.longitude,
+            userLocation.coordinates.latitude,
           ]
         : DEFAULT_CENTER;
 
       const map = new maplibregl.Map({
         container,
-        style: "https://demotiles.maplibre.org/globe.json",
-        center: initialCenter,
-        zoom: 14,
+        style: "https://demotiles.maplibre.org/style.json",
+        center: [0 ,0],
+        zoom: 1,
       });
 
       map.addControl(new maplibregl.NavigationControl(), "top-left");
@@ -48,8 +48,8 @@ const MapComponent = forwardRef<MapComponentRef, MapComponentProps>(
       if (!map || !userLocation) return;
 
       const coords: [number, number] = [
-        userLocation.coordinate.longitude,
-        userLocation.coordinate.latitude,
+        userLocation.coordinates.longitude,
+        userLocation.coordinates.latitude,
       ];
 
       if (!userMarkerRef.current) {
@@ -62,7 +62,7 @@ const MapComponent = forwardRef<MapComponentRef, MapComponentProps>(
     }, [userLocation]);
 
     useImperativeHandle(ref, () => ({
-      animateToCoordinate: (latitude, longitude, zoomLevel = 16) => {
+      animateToCoordinates: (latitude, longitude, zoomLevel = 16) => {
         mapRef.current?.flyTo({
           center: [longitude, latitude],
           zoom: zoomLevel,

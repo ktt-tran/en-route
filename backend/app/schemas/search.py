@@ -13,4 +13,4 @@ class Address(BaseModel):
 class SearchResult(BaseModel):
     name: str
     address: Address
-    coordinate: Coordinates
+    coordinates: Coordinates

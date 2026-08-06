@@ -1,0 +1,177 @@
+en-route/
+│
+├── app/                                      # Expo Router only
+│   │
+│   ├── _layout.tsx                           # Root stack
+│   ├── index.tsx                             # Redirect/root entry
+│   │
+│   ├── (tabs)/                               # Bottom navigation
+│   │   ├── _layout.tsx
+│   │   ├── map.tsx                           # Main navigation/map screen
+│   │   └── history.tsx                       # Trip history screen
+│   │
+│   ├── search.tsx                            # Destination search modal
+│   │
+│   ├── trip/
+│   │   └── [id].tsx                          # Trip details screen
+│   │
+│   └── fuel.tsx                              # Fuel/range input modal (Phase 3)
+│
+│
+├── src/
+│
+│   ├── components/                           # Shared UI components
+│   │   │
+│   │   ├── MapView.tsx
+│   │   ├── SearchBar.tsx
+│   │   ├── RouteCard.tsx
+│   │   ├── GoButton.tsx
+│   │   ├── TripCard.tsx
+│   │   ├── CheckpointCard.tsx                # Phase 2
+│   │   └── FuelCard.tsx                      # Phase 3
+│   │
+│   │
+│   ├── features/                             # Core product logic
+│   │
+│   │
+│   │   ├── map/
+│   │   │   ├── map.service.ts
+│   │   │   ├── map.types.ts
+│   │   │   └── map.utils.ts
+│   │   │
+│   │
+│   │   ├── routing/
+│   │   │   ├── routing.service.ts
+│   │   │   ├── routing.types.ts
+│   │   │   └── routing.utils.ts
+│   │   │
+│   │
+│   │   ├── search/
+│   │   │   ├── search.service.ts
+│   │   │   ├── search.types.ts
+│   │   │   └── search.utils.ts
+│   │   │
+│   │
+│   │   ├── trips/
+│   │   │   ├── trip.service.ts
+│   │   │   ├── trip.storage.ts
+│   │   │   ├── trip.types.ts
+│   │   │   ├── trip.store.ts
+│   │   │   └── trip.utils.ts
+│   │   │
+│   │
+│   │   ├── checkpoints/                      # Phase 2
+│   │   │   ├── checkpoint.service.ts
+│   │   │   ├── checkpoint.types.ts
+│   │   │   └── checkpoint.utils.ts
+│   │   │
+│   │
+│   │   ├── optimization/                     # Phase 2
+│   │   │   ├── optimization.service.ts
+│   │   │   └── optimization.types.ts
+│   │   │
+│   │
+│   │   └── fuel/                             # Phase 3
+│   │       ├── fuel.service.ts
+│   │       ├── fuel.storage.ts
+│   │       ├── fuel.types.ts
+│   │       └── fuel.utils.ts
+│   │
+│   │
+│   ├── services/                             # External integrations
+│   │   │
+│   │   ├── api.ts                            # API client
+│   │   ├── valhalla.ts
+│   │   ├── geocoding.ts
+│   │   ├── fuelPrices.ts                     # Phase 3
+│   │   └── storage.ts
+│   │
+│   │
+│   ├── hooks/                                # Shared React hooks
+│   │   │
+│   │   ├── useLocation.ts
+│   │   ├── useRoute.ts
+│   │   ├── useTrips.ts
+│   │   └── useFuel.ts                        # Phase 3
+│   │
+│   │
+│   ├── types/                                # Shared app types
+│   │   │
+│   │   ├── location.ts
+│   │   ├── coordinates.ts
+│   │   └── api.ts
+│   │
+│   │
+│   ├── constants/
+│   │   │
+│   │   ├── config.ts
+│   │   ├── colors.ts
+│   │   └── routes.ts
+│   │
+│   │
+│   ├── utils/
+│   │   │
+│   │   ├── distance.ts
+│   │   ├── formatting.ts
+│   │   └── dates.ts
+│   │
+│   │
+│   └── styles/
+│       │
+│       ├── index.ts
+│       ├── theme.ts
+│       └── typography.ts
+│
+│
+├── backend/
+│
+│   ├── app/
+│   │
+│   │   ├── main.py
+│   │
+│   │   ├── routes/
+│   │   │   ├── routing.py
+│   │   │   ├── search.py
+│   │   │   ├── trips.py
+│   │   │   └── fuel.py
+│   │   │
+│   │   │
+│   │   ├── services/
+│   │   │   ├── valhalla.py
+│   │   │   ├── geocoder.py
+│   │   │   └── fuel.py
+│   │   │
+│   │   │
+│   │   ├── models/
+│   │   │   └── trip.py
+│   │   │
+│   │   │
+│   │   └── schemas/
+│   │       ├── route.py
+│   │       ├── trip.py
+│   │       └── fuel.py
+│   │
+│   │
+│   └── docker-compose.yml
+│
+│
+├── docker/
+│   │
+│   └── valhalla/
+│       ├── Dockerfile
+│       └── config/
+│
+│
+├── assets/
+│   │
+│   ├── images/
+│   ├── icons/
+│   └── fonts/
+│
+│
+├── .env
+├── .gitignore
+├── package.json
+├── app.json
+├── tsconfig.json
+└── README.md

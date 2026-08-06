@@ -9,7 +9,7 @@ export interface MapRegion {
 
 export interface MapMarker {
   id: string;
-  coordinate: Coordinates;
+  coordinates: Coordinates;
   title?: string;
   description?: string;
 }

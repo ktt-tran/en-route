@@ -9,5 +9,7 @@ expo-system-ui
 expo-web-browser
 react-native-worklets
 zustand
+axios
 @react-navigation/native
 @maplibre/maplibre-react-native
+@tanstack/react-query

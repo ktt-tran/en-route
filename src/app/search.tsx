@@ -1,5 +1,6 @@
 import GoButton from "@/src/components/search/GoButton";
-import { useSearch } from "@/src/features/search/useSearch";
+import { useSearch } from "@/src/hooks/useSearch";
+import { useNavigationStore } from "@/src/store/navigationStore";
 import { useState } from 'react';
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
@@ -8,12 +9,16 @@ export default function SearchPage(){
 
   const [query, setQuery] = useState("");
 
-  const {
-    results,
-    loading,
-    error,
-  } = useSearch(query);
+  const { results, loading, error } = useSearch(query);
 
+  const setDestination = useNavigationStore(
+        state => state.setDestination
+    );
+
+  const destination = useNavigationStore(
+        state => state.destination
+    );
+    
   return (
     <View className="flex-1 relative bg-white">
       
@@ -51,21 +56,38 @@ export default function SearchPage(){
         )}
 
         <ScrollView className="h-3/4 mt-15">
-          { results.map((result) => (
-            <Pressable key={`${result.coordinate.latitude}-${result.coordinate.longitude}`} className="py-12 border-b border-[#ddd]"
-              onPress={() => {
-                //router.back();
-              }}
-            >
-              <Text className="text-16 font-semibold">{result.name}</Text>
+          {results.map((result) => {
+              console.log(result);
 
-              <Text>{result.address.formatted}</Text>
-            </Pressable>
-          ))}
+              const selected =
+                  destination?.coordinates.latitude === result.coordinates.latitude &&
+                  destination?.coordinates.longitude === result.coordinates.longitude;
+
+              return (
+                  <Pressable
+                      key={`${result.coordinates.latitude}-${result.coordinates.longitude}`}
+                      className={`py-12 border-b border-[#ddd] ${
+                          selected ? "bg-gray-200" : "bg-white"
+                      }`}
+                      onPress={() => {
+                          setDestination({
+                              name: result.name,
+                              coordinates: result.coordinates,
+                          });
+                      }}
+                  >
+                      <Text>{result.name}</Text>
+
+                      <Text>{result.address.formatted}</Text>
+
+                  </Pressable>
+              );
+
+          })}
         </ScrollView>
       </View>
     
-    {query.length > 0 && <GoButton />}
+    {destination && <GoButton />}
     </View>
 
   );

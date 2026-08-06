@@ -11,7 +11,7 @@ export interface FuelRequirement {
 export interface FuelStop {
   id:string
   name:string;
-  coordinate:{
+  coordinates:{
     latitude:number;
     longitude:number;
   };

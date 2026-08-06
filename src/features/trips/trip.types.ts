@@ -7,12 +7,12 @@ export interface Trip {
 
   origin:{
     name?:string;
-    coordinate:Coordinates;
+    coordinates:Coordinates;
   };
 
   destination:{
     name?:string;
-    coordinate:Coordinates;
+    coordinates:Coordinates;
   };
 
   distance:number;
