@@ -1,23 +1,16 @@
-import GoButton from "@/src/components/search/GoButton";
 import { useSearch } from "@/src/hooks/useSearch";
 import { useNavigationStore } from "@/src/store/navigationStore";
 import { useState } from 'react';
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import SearchControls from "../components/search/SearchControls";
+import ShowPreview from "../components/search/ShowPreview";
 
 
 export default function SearchPage(){
-
   const [query, setQuery] = useState("");
-
   const { results, loading, error } = useSearch(query);
-
-  const setDestination = useNavigationStore(
-        state => state.setDestination
-    );
-
-  const destination = useNavigationStore(
-        state => state.destination
-    );
+  const destination = useNavigationStore(state => state.destination);
+  const setDestination = useNavigationStore(state => state.setDestination);
     
   return (
     <View className="flex-1 relative bg-white">
@@ -26,7 +19,6 @@ export default function SearchPage(){
         <Text className="mt-12 text-3xl text-primary font-bold mb-5">
           En Route
         </Text>
-
 
         <TextInput
           placeholder="Where to?"
@@ -57,7 +49,7 @@ export default function SearchPage(){
 
         <ScrollView className="h-3/4 mt-15">
           {results.map((result) => {
-              console.log(result);
+              // console.log("DESTINATION RESULT: ", result);
 
               const selected =
                   destination?.coordinates.latitude === result.coordinates.latitude &&
@@ -76,18 +68,19 @@ export default function SearchPage(){
                           });
                       }}
                   >
+                    
                       <Text>{result.name}</Text>
 
                       <Text>{result.address.formatted}</Text>
 
                   </Pressable>
               );
-
           })}
         </ScrollView>
       </View>
     
-    {destination && <GoButton />}
+      {destination && <ShowPreview />}
+      <SearchControls />
     </View>
 
   );

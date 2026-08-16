@@ -16,14 +16,15 @@ export default function RootLayout() {
               headerShown: false,
             }}
           >
-            <Stack.Screen name="index" />
+            <Stack.Screen name="index" options={{ animation: 'slide_from_left' }} />
 
-            <Stack.Screen name="history" />
+            <Stack.Screen name="history" options={{ animation: 'slide_from_right' }} />
 
             <Stack.Screen
               name="search"
               options={{
                 presentation: "modal",
+                animation: 'slide_from_right',
               }}
             />
 
@@ -31,6 +32,8 @@ export default function RootLayout() {
               name="route"
               options={{
                 presentation: "modal",
+                headerShown: false,
+                animation: "slide_from_bottom",
               }}
             />
           </Stack>

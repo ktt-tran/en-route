@@ -1,7 +1,6 @@
 import HistoryControls from "@/src/components/history/HistoryControls";
-import { FlatList, Pressable, Text, View } from "react-native";
-
 import { router } from "expo-router";
+import { FlatList, Pressable, Text, View } from "react-native";
 
 const trips = [
   {
