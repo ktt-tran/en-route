@@ -8,6 +8,7 @@ export function usePreviewRoute() {
     const origin = useNavigationStore((state) => state.origin);
     const destination = useNavigationStore((state) => state.destination);
     const transportationMode = useNavigationStore((state) => state.transportationMode);
+
     const request = origin && destination
     ? {
         origin: origin,

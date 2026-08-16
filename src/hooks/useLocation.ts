@@ -41,21 +41,15 @@ export function useLocation() {
 
     useEffect(() => {
         async function initialize() {
-            const granted =
-                await requestPermission();
-
+            const granted = await requestPermission();
             if (!granted) return;
-
             await getCurrentLocation();
-
             await startWatching();
         }
 
         initialize();
 
-        return () => {
-            stopWatching();
-        };
+        return () => { stopWatching(); };
     }, []);
 
 
