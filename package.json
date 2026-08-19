@@ -2,6 +2,14 @@
   "name": "en-route",
   "main": "expo-router/entry",
   "version": "1.0.0",
+  "expo": {
+    "router": {
+      "root": "src/app"
+    },
+    "plugins": [
+      "expo-location"
+    ]
+  },
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
