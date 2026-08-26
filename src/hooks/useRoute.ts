@@ -7,7 +7,12 @@ import { useQuery } from "@tanstack/react-query";
 export function useRoute(request?: RouteRequest) {
     const { data: route, isLoading, error, refetch } = useQuery<RouteResponse>({
         queryKey: ["route", request],
-        queryFn: () => fetchRoute(request!),
+        queryFn: () => {
+            if (!request) {
+                throw new Error("Route request is required");
+            }
+            return fetchRoute(request);
+        },
         enabled: !!request,
     });
 

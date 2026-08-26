@@ -1,6 +1,13 @@
 import { Coordinates } from "@/src/types/coordinates";
-import { UserLocation } from "../location/location.types";
 import { Maneuver } from "../routing/routing.types";
+
+export interface RouteMatch {
+    matchedLocation: Coordinates;
+    distanceFromRoute: number;
+    distanceAlongRoute: number;
+}
+
+
 
 export interface NavigationSession {
   active:boolean;
@@ -14,16 +21,4 @@ export interface RouteProgress {
   distanceTraveled:number;
   distanceRemaining:number;
   percentage:number;
-}
-
-export interface MapMatchingResult {
-  snappedLocation:Coordinates;
-  distanceFromRoute:number;
-  segmentIndex:number;
-}
-
-export interface NavigationUpdate {
-  location:UserLocation;
-  progress:RouteProgress;
-  nextManeuver?:Maneuver;
 }

@@ -1,14 +1,14 @@
 import { Coordinates } from "@/src/types/coordinates";
 
-export type TransportationMode =
+export type TransportMode =
     | "auto"
     | "walking"
     | "bicycling";
 
 export interface RouteRequest {
-    origin: Coordinates
-    destination: Coordinates
-    mode: TransportationMode
+    origin: Coordinates;
+    destination: Coordinates;
+    mode: TransportMode;
 }
 
 export interface Maneuver {
@@ -18,10 +18,11 @@ export interface Maneuver {
 }
 
 export interface RouteResponse {
-    distance_miles: number
-    duration_seconds: number
-    geometry: Coordinates[]
-    maneuvers: Maneuver[]
+    //id: string;
+    distance_miles: number;
+    duration_seconds: number;
+    geometry: Coordinates[];
+    maneuvers: Maneuver[];
 }
 
 export interface Route {
@@ -30,13 +31,7 @@ export interface Route {
     distance: number;
     duration: number;
     maneuvers: Maneuver[];
-    mode: TransportationMode;
+    mode: TransportMode;
     origin: Coordinates;
     destination: Coordinates;
-}
-
-export interface RouteLeg {
-  distance:number;
-  duration:number;
-  maneuvers:Maneuver[];
 }

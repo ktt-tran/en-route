@@ -3,7 +3,7 @@ export interface Coordinates {
   longitude:number;
 }
 
-export interface Destination {
-    name: string,
+export interface PlaceID {
+    name?: string,
     coordinates: Coordinates,
 }

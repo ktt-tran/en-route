@@ -7,13 +7,13 @@ import { useRoute } from "./useRoute";
 export function usePreviewRoute() {
     const origin = useNavigationStore((state) => state.origin);
     const destination = useNavigationStore((state) => state.destination);
-    const transportationMode = useNavigationStore((state) => state.transportationMode);
+    const transportMode = useNavigationStore((state) => state.transportMode);
 
     const request = origin && destination
     ? {
         origin: origin,
         destination: destination.coordinates,
-        mode: transportationMode,
+        mode: transportMode,
     }: undefined;
 
     return useRoute(request)

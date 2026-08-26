@@ -6,7 +6,7 @@ import { useLocation } from "./useLocation";
 export function useNavigationRoute() {
     const { userLocation } = useLocation();
     const destination = useNavigationStore((state) => state.destination);
-    const transportationMode = useNavigationStore((state) => state.transportationMode);
+    const transportMode = useNavigationStore((state) => state.transportMode);
     const startNavigation = useNavigationStore((state) => state.startNavigation);
 
     async function beginNavigation(): Promise<boolean> {
@@ -15,7 +15,7 @@ export function useNavigationRoute() {
         const request: RouteRequest = {
             origin: userLocation.coordinates,
             destination: destination.coordinates,
-            mode: transportationMode,
+            mode: transportMode,
         };
 
         try {
