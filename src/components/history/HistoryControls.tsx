@@ -3,7 +3,6 @@ import { router } from "expo-router";
 import React from "react";
 import { Pressable, View } from "react-native";
 
-
 export default function HistoryControls() {
   return (
     <View className="absolute bottom-10 left-4">

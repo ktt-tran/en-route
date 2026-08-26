@@ -10,6 +10,6 @@ export type MapComponentRef = {
   animateToCoordinates: (
     latitude: number,
     longitude: number,
-    zoomLevel?: number
+    zoomLevel?: number,
   ) => void;
 };

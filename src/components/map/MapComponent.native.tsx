@@ -39,7 +39,7 @@ const MapComponent = forwardRef<MapComponentRef, MapComponentProps>(
               ? [userLocation.coordinates.longitude, 
                   userLocation.coordinates.latitude]
               : DEFAULT_CENTER,
-            zoom: 10,
+            zoom: 10, // Default change zoom out into the entire world in production
           }}
         />
         <UserLocation accuracy />
