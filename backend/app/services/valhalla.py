@@ -1,13 +1,13 @@
 import httpx
 import polyline
 from app.schemas.coordinates import Coordinates
-from app.schemas.routing import (TransportationMode, Maneuver, RouteResponse)
+from app.schemas.routing import (TransportMode, Maneuver, RouteResponse)
 
 
 VALHALLA_COSTING = {
-    TransportationMode.AUTO: "auto",
-    TransportationMode.WALKING: "pedestrian",
-    TransportationMode.BICYCLING: "bicycle",
+    TransportMode.AUTO: "auto",
+    TransportMode.WALKING: "pedestrian",
+    TransportMode.BICYCLING: "bicycle",
 }
 
 class ValhallaService:
@@ -15,7 +15,7 @@ class ValhallaService:
     def __init__(self, base_url: str):
         self.base_url = base_url
 
-    async def get_route(self, origin: Coordinates, destination: Coordinates, mode: TransportationMode):
+    async def get_route(self, origin: Coordinates, destination: Coordinates, mode: TransportMode):
         payload = {
             "locations": [
                 {
@@ -48,10 +48,19 @@ class ValhallaService:
             distance=summary["length"]
             duration=summary["time"]
 
+            # maneuver logs from valhalla
+            # print("\n========== RAW VALHALLA MANEUVERS ==========")
+
+            # for i, maneuver in enumerate(leg["maneuvers"]):
+            #     print(f"\n--- Maneuver {i} ---")
+            #     print(maneuver)
+
+            # print("\n=============================================\n")
+
             # decode the route shape using polylins
             decoded_route_lines = polyline.decode(
                 leg["shape"],
-                geojson=False,
+                precision=6, # specify precision otherwise the geometry returns coordinates with rounding error
             )
 
             # save the geometry

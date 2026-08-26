@@ -9,7 +9,6 @@ class Address(BaseModel):
     country: str | None = None
     formatted: str | None = None
 
-
 class SearchResult(BaseModel):
     name: str
     address: Address

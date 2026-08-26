@@ -5,14 +5,10 @@ router = APIRouter()
 
 @router.get("/search")
 async def search(query: str):
-
     results = await search_places(query)
-
     return results
 
 @router.get("/reverse")
 async def reverse(latitude: float, longitude: float):
-
     results = await reverse_geocode(latitude, longitude)
-
     return results

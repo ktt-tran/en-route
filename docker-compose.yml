@@ -13,7 +13,7 @@ services:
     restart: unless-stopped
 
   valhalla:
-    image: ghcr.io/valhalla/valhalla:latest
+    image: ghcr.io/valhalla/valhalla:3.8.3
     container_name: enroute-valhalla
     ports:
       - "8002:8002"
