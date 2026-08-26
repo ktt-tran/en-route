@@ -1,11 +1,10 @@
 import MapComponent from "@/src/components/map/MapComponent";
 import type { MapComponentRef } from "@/src/components/map/MapComponent.types";
-import MapControls from "@/src/components/map/MapControls";
-import MapSearchBar from "@/src/components/map/MapSearchBar";
 import { useLocation } from "@/src/hooks/useLocation";
 import { usePreviewRoute } from "@/src/hooks/usePreviewRoute";
 import { useEffect, useRef } from "react";
 import { View } from "react-native";
+import { MapControls, MapSearchBar } from "../components/map/MapControls";
 import RoutePreviewSheet from "../components/route/RoutePreviewSheet";
 import { useNavigationStore } from "../store/navigationStore";
 

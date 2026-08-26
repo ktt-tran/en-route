@@ -1,21 +1,23 @@
 import HistoryControls from "@/src/components/history/HistoryControls";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
+import React from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
-
-const trips = [
-  {
-    id: "1",
-    destination: "Washington DC",
-    date: "Today",
-  },
-  {
-    id: "2",
-    destination: "Philadelphia",
-    date: "Yesterday",
-  },
-];
+import { useTripHistory } from "../hooks/useTrips";
 
 export default function HistoryScreen() {
+    const {
+        trips,
+        isLoading,
+        error,
+        reload,
+    } = useTripHistory();
+  
+    useFocusEffect(
+      React.useCallback(() => {
+        reload();
+      }, [reload])
+    );
+
   return (
     <View className="flex-1 relative bg-white p-5">
 
@@ -23,20 +25,43 @@ export default function HistoryScreen() {
         Trip History
       </Text>
 
+      {isLoading && (
+          <Text>Loading trips...</Text>
+      )}
+
+      {error && (
+          <Text className="text-red-500">
+              {error}
+          </Text>
+      )}
+
+      {!isLoading && trips.length === 0 && (
+          <Text className="text-gray-500">
+              No trips yet.
+          </Text>
+      )}
+
       <FlatList
+        style={{ maxHeight: '78%' }}
         data={trips}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Pressable
             onPress={() => router.push(`/trip/${item.id}`)}
-            className="p-5 bg-gray-100 mt-4 rounded-xl"
+            className="p-5 bg-gray-100 mt-4 rounded-xl shadow-sm"
           >
             <Text className="text-lg font-semibold">
-              {item.destination}
+              {item.destination.name ?? `Coordinates: ${item.destination.coordinates}`}
             </Text>
 
             <Text className="text-gray-500 mt-1">
-              {item.date}
+              {new Date(item.startedAt).toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                  })}
             </Text>
 
           </Pressable>

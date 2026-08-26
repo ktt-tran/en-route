@@ -2,9 +2,7 @@ import { useSearch } from "@/src/hooks/useSearch";
 import { useNavigationStore } from "@/src/store/navigationStore";
 import { useState } from 'react';
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
-import SearchControls from "../components/search/SearchControls";
-import ShowPreview from "../components/search/ShowPreview";
-
+import { SearchControls, ShowPreview } from "../components/search/SearchControls";
 
 export default function SearchPage(){
   const [query, setQuery] = useState("");

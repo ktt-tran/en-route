@@ -1,41 +1,90 @@
-import { useLocalSearchParams } from "expo-router";
-import { Text, View } from "react-native";
+import InfoCard from "@/src/components/trip/InfoCard";
+import { TripControls } from "@/src/components/trip/TripControls";
+import { useTrip } from "@/src/hooks/useTrips";
+import { router, useLocalSearchParams } from "expo-router";
+import React from "react";
+import { Pressable, Text, View } from "react-native";
 
+export default function TripDetails() {
+  const { id } = useLocalSearchParams();
+  const tripId = Number(id);
 
-export default function TripDetails(){
+  const {
+    trip,
+    isLoading,
+    error,
+    isDeleting,
+    removeTrip,
+  } = useTrip(tripId);
 
-  const {id}=useLocalSearchParams();
+  const handleDelete = async () => {
+    const deleted = await removeTrip();
+    if (deleted) { router.dismissTo("/history")};
+  }
 
+  if (isLoading) {
+    return (
+        <View className="flex-1 items-center justify-center">
+            <Text>Loading trip...</Text>
+        </View>
+    );
+  }
+
+  if (!trip) {
+      return (
+          <View className="flex-1 items-center justify-center">
+              <Text>
+                  {error ?? "Trip not found"}
+              </Text>
+
+            <Pressable
+                onPress={() => router.replace("/history")}
+                className="mt-5 px-6 py-3 rounded-full bg-primary"
+            >
+                <Text className="text-white font-bold">
+                    Back to History
+                </Text>
+            </Pressable>
+          </View>
+      );
+  }
 
   return (
+    <View className="flex-1 relative bg-white">     
+      <View className="flex-1 p-5">
+        <View className="mt-12 mb-6">
+          <Text className="text-sm font-semibold text-gray-400 tracking-widest uppercase">
+            Trip Date:
+            {` ${new Date(
+                trip.startedAt).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      hour12: true
+                    })} - ${new Date(
+                trip.endedAt).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      hour12: true
+                    })}
+            `}
+          </Text>
+          <Text className="text-3xl font-bold text-slate-900 mt-1">
+            {trip.destination.name ?? "Nameless"}
+          </Text>
+        </View>
 
-    <View style={{
-      flex:1,
-      padding:20
-    }}>
+        <InfoCard TOTAL_DISTANCE={trip.distanceMiles} TOTAL_DURATION={trip.durationSeconds} />
 
-      <Text>
-        Trip #{id}
-      </Text>
+        {/* <TripCard stops={stops} /> */}
+      </View>
 
-
-      <Text>
-        Route Details
-      </Text>
-
-
-      <Text>
-        Distance: -- 
-      </Text>
-
-
-      <Text>
-        ETA: --
-      </Text>
-
-
+      <View className="p-5">
+        <TripControls onDelete={handleDelete} deleting={isDeleting} />
+      </View>
     </View>
-
   );
-
 }
