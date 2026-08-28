@@ -1,12 +1,15 @@
-import { saveTrip } from "@/src/features/record/trip.service";
+import { saveTrip } from "@/src/features/trip/trip.service";
 import { useNavigationStore } from "@/src/store/navigationStore";
+import { geocodeToAddress } from "../features/search/geocoding.service";
+import { useTripStore } from "../store/tripStore";
 
 export function useNavigationEnd() {
-    const originCoords = useNavigationStore((state) => state.origin);
-    const destination = useNavigationStore((state) => state.destination);
+    const originCoords = useTripStore((state) => state.origin);
+    const destination = useTripStore((state) => state.destination);
+    const checkpoints = useTripStore((state) => state.checkpoints);
     const navigationRoute = useNavigationStore((state) => state.navigationRoute);
     const liveLocation = useNavigationStore((state) => state.liveLocation);
-    const transportMode = useNavigationStore((state) => state.transportMode);
+    const transportMode = useTripStore((state) => state.transportMode);
     const navigationStartedAt = useNavigationStore((state) => state.navigationStartedAt);
     const arrived = useNavigationStore((state) => state.arrivalDetected);
     const stopNavigation = useNavigationStore((state) => state.stopNavigation);
@@ -29,15 +32,16 @@ export function useNavigationEnd() {
 
         try {
 
-            const endedAt = Date.now();
+            const address = await geocodeToAddress(originCoords);
 
-            const originAddress = "None";
+            const endedAt = Date.now();
 
             const trip = {
                 origin: {
-                    name: originAddress,
+                    name: address?.name ?? "Un Named",
                     coordinates: originCoords,
                 },
+                checkpoints,
                 destination,
                 finalLocation: liveLocation,
                 distanceMiles: navigationRoute.distance_miles,
@@ -48,7 +52,7 @@ export function useNavigationEnd() {
                 arrived,
             };
 
-            const tripId = await saveTrip(trip);
+            const tripId = await saveTrip(trip, navigationRoute.legs);
 
             console.log(
                 "[Navigation] Trip saved:",

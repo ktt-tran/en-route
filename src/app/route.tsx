@@ -5,26 +5,24 @@ import { router } from "expo-router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Text, View } from "react-native";
 import MapComponent from "../components/map/MapComponent.native";
-import { isArrived } from "../features/navigation/arrivalDetector";
-import { isLocationOffRoute } from "../features/navigation/offRouteDectector";
+import { isArrived, isLocationOffRoute } from "../features/navigation/detection";
 import { useLocation } from "../hooks/useLocation";
 import { useRerouting } from "../hooks/useRerouting";
 import { useNavigationStore } from "../store/navigationStore";
+import { useTripStore } from "../store/tripStore";
 import { formatDuration } from "../utils/formatting";
-
-const METERS_PER_MILE = 1609.344;
 
 export default function TripRoute() {
   const { userLocation } = useLocation();
-  const destination = useNavigationStore((state) => state.destination);
+  const destination = useTripStore((state) => state.destination);
   const navigationRoute = useNavigationStore((state) => state.navigationRoute);
-  const setLiveLocation = useNavigationStore((state) => state.setLiveLocation);
-  const updateRouteMatch = useNavigationStore((state) => state.updateRouteMatch);
   const distanceRemaining = useNavigationStore((state) => state.distanceRemaining);
   const remainingDuration = useNavigationStore((state) => state.remainingDuration); 
-  const setOffRoute = useNavigationStore((state) => state.setOffRoute);
   const navigationActive = useNavigationStore((state) => state.navigationActive);
   const navigationStatus = useNavigationStore((state) => state.navigationStatus);
+  const setLiveLocation = useNavigationStore((state) => state.setLiveLocation);
+  const updateRouteMatch = useNavigationStore((state) => state.updateRouteMatch);
+  const setOffRoute = useNavigationStore((state) => state.setOffRoute);
   const setNavigationStatus = useNavigationStore((state) => state.setNavigationStatus);
   const { reroute } = useRerouting(userLocation);
   const [currentTime, setCurrentTime] = useState(Date.now());
@@ -33,6 +31,7 @@ export default function TripRoute() {
   const snapPoints = useMemo(() => ["25%", "50%", "90%"], []);
 
   useEffect(() => {
+
       if (!navigationActive) {
           router.replace("/");
           console.log("[Navigation] Not active");
@@ -64,16 +63,12 @@ export default function TripRoute() {
 
       setLiveLocation(userLocation.coordinates);
 
-      if (
-          isArrived(
-              userLocation.coordinates,
-              destination.coordinates
-          )
-      ) {
+      if (isArrived(
+            userLocation.coordinates,
+            destination.coordinates
+          )) {
           console.log("[Navigation] Destination reached");
-
           setNavigationStatus("arrived");
-
           return;
       }
 
@@ -121,9 +116,7 @@ export default function TripRoute() {
           offRoute,
       });
 
-      if (offRoute) {
-        reroute();
-      };
+      if (offRoute) { reroute(); };
 
       const timer = setInterval(() => setCurrentTime(Date.now()), 60000);
       return () => clearInterval(timer);
@@ -168,7 +161,7 @@ export default function TripRoute() {
               <Text className="mt-4 font-semibold">Route Details</Text>
               <Text>Distance:{" "}
                 {navigationRoute
-                  ? `${(distanceRemaining / METERS_PER_MILE).toFixed(1)} mi`
+                  ? `${(distanceRemaining / (1609.344)).toFixed(1)} mi`
                 : "--"}
               </Text>
               <Text>Duration:{" "}

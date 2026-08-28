@@ -1,4 +1,4 @@
-import { useNavigationStore } from "@/src/store/navigationStore";
+import { useTripStore } from "@/src/store/tripStore";
 import { formatDuration } from "@/src/utils/formatting";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import React, { useEffect, useMemo, useRef } from "react";
@@ -7,7 +7,7 @@ import type { RoutePreviewSheetProps } from "./Route.types";
 import { PreviewControls } from "./RouteControls";
 
 export default function RoutePreviewSheet({ route, isLoading, error }: RoutePreviewSheetProps) {
-  const destination = useNavigationStore((state) => state.destination);
+  const destination = useTripStore((state) => state.destination);
   const sheetRef = useRef<BottomSheet>(null);
   const snapPoints = useMemo(() => ["20%", "40%"], []);
 

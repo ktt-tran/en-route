@@ -8,12 +8,12 @@ export default function HistoryControls() {
     <View className="absolute bottom-10 left-4">
       <Pressable
         onPress={() => router.back()}
-        className="bg-primary m-2 rounded-full p-2 shadow-2xl"
+        className="white m-2 rounded-full p-2 shadow-2xl"
       >
         <MaterialIcons
           name="arrow-back-ios-new"
           size={34}
-          color="white"
+          color="primary"
         />
       </Pressable>
     </View>

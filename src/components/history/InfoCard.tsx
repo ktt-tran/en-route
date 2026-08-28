@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View } from "react-native";
-import { InfoCardProp } from "./Trip.types";
+import { InfoCardProp } from "./Card.types";
 
 export default function InfoCard({TOTAL_DISTANCE, TOTAL_DURATION}: InfoCardProp) {
     const minutes = Math.round(TOTAL_DURATION / 60);

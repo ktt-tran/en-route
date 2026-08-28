@@ -9,9 +9,5 @@ valhalla = ValhallaService(settings.valhalla_url)
 
 @router.post("/routes", response_model=RouteResponse)
 async def create_route(request: RouteRequest):
-    result = await valhalla.get_route(
-        origin=request.origin,
-        destination=request.destination,
-        mode=request.mode,
-    )
+    result = await valhalla.get_route(request)
     return result

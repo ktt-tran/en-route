@@ -1,13 +1,13 @@
 import { useNavigationEnd } from "@/src/hooks/useNavigationEnd";
 import { useNavigationRoute } from "@/src/hooks/useNavigationRoute";
-import { useNavigationStore } from "@/src/store/navigationStore";
+import { useTripStore } from "@/src/store/tripStore";
 import { router } from "expo-router";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import type { RoutePreviewSheetProps } from "./Route.types";
 
 export function EndButton() {
-  const clearDestination = useNavigationStore((state) => state.clearDestination);
+  const clearDestination = useTripStore((state) => state.clearDestination);
   const { commitNavigation } = useNavigationEnd();
 
   async function handleEndNavigation() {
@@ -22,7 +22,7 @@ export function EndButton() {
         onPress={handleEndNavigation}
         className="bg-end rounded-full h-14 w-80 items-center justify-center shadow-2xl"
       >
-        <Text className="text-2xl text-white font-bold text-slate-900 tracking-tight mb-1">
+        <Text className="text-lg text-white font-bold text-slate-900 tracking-tight mb-1">
           END & SAVE
         </Text>
       </Pressable>
@@ -31,8 +31,8 @@ export function EndButton() {
 }
 
 export function PreviewControls({ route, isLoading, error }: RoutePreviewSheetProps) {
-  const destination = useNavigationStore((state) => state.destination);
-  const clearDestination = useNavigationStore((state) => state.clearDestination);
+  const destination = useTripStore((state) => state.destination);
+  const clearDestination = useTripStore((state) => state.clearDestination);
   const canStartNavigation = !!destination && !!route && !isLoading && !error;
   
   // the user location can change during the route preview and if it does the route should

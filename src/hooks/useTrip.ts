@@ -1,5 +1,5 @@
-import { deleteTrip, getRecentTrips, getTripById } from "@/src/features/record/trip.service";
-import type { TripHistory } from "@/src/features/record/trip.types";
+import { deleteTrip, getRecentTrips, getTripById } from "@/src/features/trip/trip.service";
+import type { TripHistory } from "@/src/features/trip/trip.types";
 import { useCallback, useEffect, useState } from "react";
 
 // load all trips in the database
@@ -62,15 +62,14 @@ export function useTrip(id: number) {
                     error
                 );
 
-                setError(
-                    "Failed to load trip"
-                );
+                setError("Failed to load trip");
             } finally {
                 setIsLoading(false);
             }
         }
 
         loadTrip();
+        
     }, [id]);
 
     const removeTrip = useCallback(async (): Promise<boolean> => {

@@ -6,32 +6,20 @@ export type TransportMode =
     | "bicycling";
 
 export interface RouteRequest {
-    origin: Coordinates;
-    destination: Coordinates;
+    locations: Coordinates[];
     mode: TransportMode;
 }
 
-export interface Maneuver {
-    instruction: string;
+export interface RouteLeg {
+    from_location: Coordinates;
+    to_location: Coordinates;
     distance_miles: number;
     duration_seconds: number;
+    /* geometry: Coordinates[]; */  
 }
-
 export interface RouteResponse {
-    //id: string;
     distance_miles: number;
     duration_seconds: number;
     geometry: Coordinates[];
-    maneuvers: Maneuver[];
-}
-
-export interface Route {
-    id?: string;
-    geometry: Coordinates[];
-    distance: number;
-    duration: number;
-    maneuvers: Maneuver[];
-    mode: TransportMode;
-    origin: Coordinates;
-    destination: Coordinates;
+    legs: RouteLeg[];
 }

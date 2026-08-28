@@ -1,6 +1,11 @@
-import type { TransportMode } from "@/src/features/routing/routing.types";
-import { getDatabase } from "./trip.database";
+import { getDatabase } from "@/src/database/sqlite-database";
+import type { RouteLeg, TransportMode } from "@/src/features/routing/routing.types";
+import { TripRouteLeg } from "@/src/features/trip/trip.types";
+import { getCheckpoints, saveCheckpoint } from "../checkpoint/checkpoint.service";
+import { Checkpoint } from "../checkpoint/checkpoint.types";
+import { getTripLegs, saveTripLegs } from "./trip-leg.service";
 import type { TripHistory } from "./trip.types";
+
 
 interface TripRow {
     id: number;
@@ -20,7 +25,17 @@ interface TripRow {
     arrived: number;
 }
 
-function mapTripRow(row: TripRow): TripHistory {
+function mapRouteLeg(leg: RouteLeg, order: number): TripRouteLeg {
+    return {
+        order,
+        from: leg.from_location,
+        to: leg.to_location,
+        distance_miles: leg.distance_miles,
+        duration_seconds: leg.duration_seconds,
+    };
+}
+
+function mapTripRow(row: TripRow, checkpoints: Checkpoint[], legs: TripRouteLeg[]): TripHistory {
     return {
         id: row.id,
 
@@ -31,6 +46,8 @@ function mapTripRow(row: TripRow): TripHistory {
                 longitude: row.origin_longitude,
             },
         },
+
+        checkpoints,
 
         destination: {
             name: row.destination_name,
@@ -49,8 +66,9 @@ function mapTripRow(row: TripRow): TripHistory {
 
         durationSeconds: row.duration_seconds,
 
-        transportMode:
-            row.transport_mode,
+        transportMode: row.transport_mode,
+
+        legs,
 
         startedAt: row.started_at,
 
@@ -60,9 +78,9 @@ function mapTripRow(row: TripRow): TripHistory {
     };
 }
 
-export async function saveTrip(trip: Omit<TripHistory, "id">): Promise<number> {
+export async function saveTrip(trip: Omit<TripHistory, "id" | "legs">, legs: RouteLeg[]): Promise<number> {
     const db = await getDatabase();
-
+    
     const result = await db.runAsync(
         `
         INSERT INTO trips (
@@ -80,7 +98,7 @@ export async function saveTrip(trip: Omit<TripHistory, "id">): Promise<number> {
             distance_miles,
             duration_seconds,
 
-            transportation_mode,
+            transport_mode,
 
             started_at,
             ended_at,
@@ -112,7 +130,37 @@ export async function saveTrip(trip: Omit<TripHistory, "id">): Promise<number> {
         trip.arrived ? 1 : 0
     );
 
-    return result.lastInsertRowId;
+    const tripId = result.lastInsertRowId;
+
+
+    console.log(
+        "[TripService] Saving checkpoints:",
+        trip.checkpoints
+    );
+
+    for (const checkpoint of trip.checkpoints) {
+        await saveCheckpoint(tripId, checkpoint);
+    }
+
+
+    console.log(
+        "[TripService] Saving legs:",
+        legs
+    );
+
+
+    const tripLegs = legs.map((leg, index) => mapRouteLeg(leg, index));
+
+    console.log(
+        "[TripService] Mapped trip legs:",
+        tripLegs
+    );
+    
+    await saveTripLegs(tripId, tripLegs);
+
+    console.log("[TripService] Trip completely saved:", tripId);
+
+    return tripId;
 }
 
 export async function getRecentTrips(limit = 20): Promise<TripHistory[]> {
@@ -128,7 +176,18 @@ export async function getRecentTrips(limit = 20): Promise<TripHistory[]> {
         limit
     );
 
-    return rows.map(mapTripRow);
+    return Promise.all(
+        rows.map(async (row) => {
+            const checkpoints = await getCheckpoints(row.id);
+            const legs = await getTripLegs(row.id);
+
+            return mapTripRow(
+                row,
+                checkpoints,
+                legs
+            );
+        })
+    );
 }
 
 export async function getTripById(id: number): Promise<TripHistory | null> {
@@ -145,7 +204,11 @@ export async function getTripById(id: number): Promise<TripHistory | null> {
 
     if (!row) { return null; }
 
-    return mapTripRow(row);
+    const checkpoints = await getCheckpoints(row.id);
+
+    const legs = await getTripLegs(id);
+
+    return mapTripRow(row, checkpoints, legs);
 }
 
 export async function deleteTrip(id: number): Promise<void> {

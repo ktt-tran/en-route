@@ -2,7 +2,7 @@ import HistoryControls from "@/src/components/history/HistoryControls";
 import { router, useFocusEffect } from "expo-router";
 import React from "react";
 import { FlatList, Pressable, Text, View } from "react-native";
-import { useTripHistory } from "../hooks/useTrips";
+import { useTripHistory } from "../hooks/useTrip";
 
 export default function HistoryScreen() {
     const {

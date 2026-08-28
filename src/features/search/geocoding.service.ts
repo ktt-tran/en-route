@@ -5,9 +5,7 @@ import { SearchQuery, SearchResult } from "./search.types";
 export async function queryToGeocode({text}: SearchQuery): Promise<SearchResult | null> {
     const result = await Location.geocodeAsync(text);
 
-    if (!result.length) {
-        return null;
-    }
+    if (!result.length) { return null; }
         
     return {
         name: text,
@@ -24,9 +22,7 @@ export async function queryToGeocode({text}: SearchQuery): Promise<SearchResult 
 export async function geocodeToAddress(coords: Coordinates): Promise<SearchResult | null> {
     const result = await Location.reverseGeocodeAsync(coords);
 
-    if (!result.length) {
-        return null;
-    }
+    if (!result.length) { return null; }
 
     const address = result[0];
 

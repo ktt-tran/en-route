@@ -1,6 +1,8 @@
-import InfoCard from "@/src/components/trip/InfoCard";
-import { TripControls } from "@/src/components/trip/TripControls";
-import { useTrip } from "@/src/hooks/useTrips";
+import { buildRouteCard } from "@/src/components/history/BuildRouteCard";
+import InfoCard from "@/src/components/history/InfoCard";
+import TripCard from "@/src/components/history/TripCard";
+import { TripControls } from "@/src/components/history/TripCardControls";
+import { useTrip } from "@/src/hooks/useTrip";
 import { router, useLocalSearchParams } from "expo-router";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
@@ -49,6 +51,8 @@ export default function TripDetails() {
       );
   }
 
+  const stops = buildRouteCard(trip);
+
   return (
     <View className="flex-1 relative bg-white">     
       <View className="flex-1 p-5">
@@ -79,7 +83,7 @@ export default function TripDetails() {
 
         <InfoCard TOTAL_DISTANCE={trip.distanceMiles} TOTAL_DURATION={trip.durationSeconds} />
 
-        {/* <TripCard stops={stops} /> */}
+        <TripCard stops={stops}/>
       </View>
 
       <View className="p-5">

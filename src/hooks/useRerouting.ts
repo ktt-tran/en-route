@@ -1,12 +1,15 @@
 import { useNavigationStore } from "@/src/store/navigationStore";
 import { useCallback, useRef } from "react";
 import { UserLocation } from "../features/location/location.types";
+import { buildRouteRequest } from "../features/routing/route.builder";
 import { fetchRoute } from "../features/routing/routing.service";
 import { RouteRequest } from "../features/routing/routing.types";
+import { useTripStore } from "../store/tripStore";
 
 export function useRerouting(userLocation: UserLocation | null) {
-    const destination = useNavigationStore((state) => state.destination);
-    const transportMode = useNavigationStore((state) => state.transportMode);
+    const destination = useTripStore((state) => state.destination);
+    const checkpoints = useTripStore((state) => state.checkpoints);
+    const transportMode = useTripStore((state) => state.transportMode);
     const updateNavigationRoute = useNavigationStore((state) => state.updateNavigationRoute);
     const setRerouting = useNavigationStore((state) => state.setRerouting);
     const reroutingRef = useRef(false);
@@ -20,11 +23,12 @@ export function useRerouting(userLocation: UserLocation | null) {
 
         try {
 
-            const request: RouteRequest = {
+            const request: RouteRequest = buildRouteRequest({
                 origin: userLocation.coordinates,
-                destination: destination.coordinates,
-                mode: transportMode,
-            };
+                checkpoints,
+                destination,
+                transportMode,
+            });
 
             const route = await fetchRoute(request);
 

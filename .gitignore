@@ -10,6 +10,9 @@ docker/valhalla/data/tiles/
 docker/valhalla/data/tiles.tar
 docker/valhalla/data/admins.sqlite
 docker/valhalla/data/timezones.sqlite
+src/utils/database-wipe.ts
+src/zz/
+src/features/trip-intelligence/
 EN-ROUTE/
 map-data/
 scripts/build-valhalla.sh

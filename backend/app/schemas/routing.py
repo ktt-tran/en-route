@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from enum import Enum
 from .coordinates import Coordinates
 
@@ -8,17 +8,18 @@ class TransportMode(str, Enum):
     BICYCLING="bicycling"
 
 class RouteRequest(BaseModel):
-    origin: Coordinates
-    destination: Coordinates
+    locations: list[Coordinates] = Field(min_length=2)
     mode: TransportMode
 
-class Maneuver(BaseModel):
-    instruction: str
+class RouteLeg(BaseModel):
+    from_location: Coordinates
+    to_location: Coordinates
     distance_miles: float
     duration_seconds: float
+    # geometry: list[Coordinates]
 
 class RouteResponse(BaseModel):
     distance_miles: float
     duration_seconds: float
     geometry: list[Coordinates]
-    maneuvers: list[Maneuver]
+    legs: list[RouteLeg]
