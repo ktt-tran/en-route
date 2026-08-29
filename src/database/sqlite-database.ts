@@ -47,7 +47,7 @@ export async function initializeDatabase() {
         ON trips (ended_at DESC);
 
         CREATE TABLE IF NOT EXISTS checkpoints (
-            id TEXT PRIMARY KEY NOT NULL,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
 
             trip_id INTEGER NOT NULL,
 

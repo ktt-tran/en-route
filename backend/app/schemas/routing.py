@@ -16,7 +16,6 @@ class RouteLeg(BaseModel):
     to_location: Coordinates
     distance_miles: float
     duration_seconds: float
-    # geometry: list[Coordinates]
 
 class RouteResponse(BaseModel):
     distance_miles: float

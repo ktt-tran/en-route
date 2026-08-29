@@ -74,9 +74,7 @@ export async function saveTripLegs(tripId: number, legs: TripRouteLeg[]): Promis
     }
 }
 
-export async function getTripLegs(
-    tripId: number
-): Promise<TripRouteLeg[]> {
+export async function getTripLegs(tripId: number): Promise<TripRouteLeg[]> {
 
     const db = await getDatabase();
 

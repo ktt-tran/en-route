@@ -2,7 +2,7 @@ import { getDatabase } from "@/src/database/sqlite-database";
 import type { Checkpoint } from "./checkpoint.types";
 
 interface CheckpointRow {
-    id: string;
+    id: number;
     trip_id: number;
     name?: string;
     latitude: number;
@@ -12,7 +12,7 @@ interface CheckpointRow {
 
 function mapCheckpointRow(row: CheckpointRow): Checkpoint {
     return {
-        id: row.id,
+        id: row.id.toString(),
 
         placeId: {
             name: row.name,
@@ -30,25 +30,26 @@ function mapCheckpointRow(row: CheckpointRow): Checkpoint {
 export async function saveCheckpoint(tripId: number, checkpoint: Checkpoint): Promise<void> {
     const db = await getDatabase();
 
+    console.log("[CheckpointService] Saving Checkpoint initialized");
+
     await db.runAsync(
         `
         INSERT INTO checkpoints (
-            id,
             trip_id,
             name,
             latitude,
             longitude,
             checkpoint_order
         )
-        VALUES (?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?)
         `,
-        checkpoint.id,
         tripId,
         checkpoint.placeId.name ?? null,
         checkpoint.placeId.coordinates.latitude,
         checkpoint.placeId.coordinates.longitude,
         checkpoint.order
     );
+    
 }
 
 export async function getCheckpoints(tripId: number): Promise<Checkpoint[]> {
@@ -81,7 +82,7 @@ export async function deleteCheckpoint(id: string): Promise<void> {
         DELETE FROM checkpoints
         WHERE id = ?
         `,
-        id
+        Number(id)
     );
 }
 
@@ -114,7 +115,7 @@ export async function reorderCheckpoints(tripId: number, checkpoints: Checkpoint
                 AND trip_id = ?
                 `,
                 index,
-                checkpoints[index].id,
+                Number(checkpoints[index].id),
                 tripId
             );
         }

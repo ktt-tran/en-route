@@ -2,10 +2,10 @@ import { useTripStore } from "@/src/store/tripStore";
 import { Alert, Pressable, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-export default function TripStops({onPreviewRoute}: {onPreviewRoute:() => void}) {
+export default function TripCalculation({onPreviewRoute}: {onPreviewRoute:() => void}) {
     const origin = useTripStore((state) => state.origin);
     const destination = useTripStore((state) => state.destination);
-    const checkpoints = useTripStore((state) => state.checkpoints);
+    const checkpoints = useTripStore((state) => state.totalCheckpoints);
     const setRoutePlanningMode = useTripStore((state) => state.setPlanningMode);
     const removeCheckpoint = useTripStore((state) => state.removeCheckpoint);
     const reorderCheckpoints = useTripStore((state) => state.reorderCheckpoints);

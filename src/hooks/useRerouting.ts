@@ -8,7 +8,7 @@ import { useTripStore } from "../store/tripStore";
 
 export function useRerouting(userLocation: UserLocation | null) {
     const destination = useTripStore((state) => state.destination);
-    const checkpoints = useTripStore((state) => state.checkpoints);
+    const checkpoints = useTripStore((state) => state.unfinishedCheckpoints);
     const transportMode = useTripStore((state) => state.transportMode);
     const updateNavigationRoute = useNavigationStore((state) => state.updateNavigationRoute);
     const setRerouting = useNavigationStore((state) => state.setRerouting);

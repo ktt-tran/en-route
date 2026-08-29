@@ -15,9 +15,10 @@ export interface RouteLeg {
     to_location: Coordinates;
     distance_miles: number;
     duration_seconds: number;
-    /* geometry: Coordinates[]; */  
 }
+
 export interface RouteResponse {
+    //fullRoute: Coordinates[];
     distance_miles: number;
     duration_seconds: number;
     geometry: Coordinates[];

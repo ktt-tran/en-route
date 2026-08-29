@@ -7,7 +7,7 @@ router = APIRouter()
 
 valhalla = ValhallaService(settings.valhalla_url)
 
-@router.post("/routes", response_model=RouteResponse)
+@router.post("/route", response_model=RouteResponse)
 async def create_route(request: RouteRequest):
     result = await valhalla.get_route(request)
     return result

@@ -1,4 +1,4 @@
-import { routeToGeoJSON } from "@/src/features/routing/routeGeometry";
+import { routeToGeoJSON } from "@/src/features/routing/route.geometry";
 import { useTripStore } from "@/src/store/tripStore";
 import { Camera, type CameraRef, GeoJSONSource, Layer, Map, UserLocation } from "@maplibre/maplibre-react-native";
 import { forwardRef, useImperativeHandle, useRef } from "react";
@@ -11,29 +11,41 @@ const MapComponent = forwardRef<MapComponentRef, MapComponentProps>(
   ({ userLocation, route }, ref) => {
   const origin = useTripStore((state) => state.origin);
   const destination = useTripStore((state) => state.destination);
-  const checkpoints = useTripStore((state) => state.checkpoints);
+  const totalCheckpoints = useTripStore((state) => state.totalCheckpoints);
+  const unfinishedCheckpoints = useTripStore((state) => state.unfinishedCheckpoints);
   const cameraRef = useRef<CameraRef>(null);
   const routeGeoJSON = route? routeToGeoJSON(route.geometry): null;
+
+  const unfinishedIds =
+    new Set(
+      unfinishedCheckpoints.map(
+          (checkpoint) =>
+              checkpoint.id
+      )
+    );
 
   const locations =
     origin && destination
       ? [
         {
             type: "origin",
-            name: "None",
+            name: "Start",
             coordinates: origin,
+            completed: true,
         },
 
-        ...checkpoints.map((checkpoint) => ({
+        ...totalCheckpoints.map((checkpoint) => ({
             type: "checkpoint",
             name: checkpoint.placeId.name,
             coordinates: checkpoint.placeId.coordinates,
+            completed: !unfinishedIds.has(checkpoint.id),
         })),
 
         {
             type: "destination",
-            name: destination.name,
+            name: destination.name ?? "Destination",
             coordinates: destination.coordinates,
+            completed: false,
         },
     ] : [];
 
@@ -111,8 +123,35 @@ const MapComponent = forwardRef<MapComponentRef, MapComponentProps>(
                   id="location-points"
                   type="circle"
                   paint={{
-                      "circle-radius": 6,
-                      "circle-color": "#22C55E",
+                      /*
+                        * Completed checkpoint = green
+                        * Incomplete checkpoint = white
+                        * Origin = blue
+                        * Destination = dark
+                      */
+                      "circle-color": [
+                          "case",
+                          ["==",
+                              ["get", "type"],
+                              "origin",
+                          ],
+                          "#2563EB",
+
+                          ["==",
+                              ["get", "type"],
+                              "destination",
+                          ],
+                          "#0F172A",
+
+                          ["==",
+                              ["get", "completed"],
+                              true,
+                          ],
+                          "#22C55E",
+                          "#FFFFFF",
+                      ],
+
+                      "circle-radius": 7,
                       "circle-stroke-color": "#2563EB",
                       "circle-stroke-width": 2,
                   }}

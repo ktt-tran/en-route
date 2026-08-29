@@ -6,7 +6,7 @@ import { useTripStore } from "../store/tripStore";
 export function useNavigationRoute() {
     const origin = useTripStore((state) => state.origin);
     const destination = useTripStore((state) => state.destination);
-    const checkpoints = useTripStore((state) => state.checkpoints);
+    const checkpoints = useTripStore((state) => state.totalCheckpoints);
     const transportMode = useTripStore((state) => state.transportMode);
     const startNavigation = useNavigationStore((state) => state.startNavigation);
 

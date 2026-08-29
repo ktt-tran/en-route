@@ -78,9 +78,14 @@ function mapTripRow(row: TripRow, checkpoints: Checkpoint[], legs: TripRouteLeg[
     };
 }
 
-export async function saveTrip(trip: Omit<TripHistory, "id" | "legs">, legs: RouteLeg[]): Promise<number> {
+export async function saveTrip(
+    trip: Omit<TripHistory, "id" | "legs">, 
+    legs: RouteLeg[],
+): Promise<number> {
     const db = await getDatabase();
-    
+
+    console.log("[TripService] Saving Trip initialized");
+
     const result = await db.runAsync(
         `
         INSERT INTO trips (
@@ -133,28 +138,17 @@ export async function saveTrip(trip: Omit<TripHistory, "id" | "legs">, legs: Rou
     const tripId = result.lastInsertRowId;
 
 
-    console.log(
-        "[TripService] Saving checkpoints:",
-        trip.checkpoints
-    );
+    console.log("[TripService] Saving checkpoints:", trip.checkpoints);
 
     for (const checkpoint of trip.checkpoints) {
         await saveCheckpoint(tripId, checkpoint);
     }
 
-
-    console.log(
-        "[TripService] Saving legs:",
-        legs
-    );
-
+    console.log("[TripService] Saving legs:", legs);
 
     const tripLegs = legs.map((leg, index) => mapRouteLeg(leg, index));
 
-    console.log(
-        "[TripService] Mapped trip legs:",
-        tripLegs
-    );
+    console.log("[TripService] Mapped trip legs:", tripLegs);
     
     await saveTripLegs(tripId, tripLegs);
 

@@ -5,7 +5,7 @@ import { router } from "expo-router";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Text, View } from "react-native";
 import MapComponent from "../components/map/MapComponent.native";
-import { isArrived, isLocationOffRoute } from "../features/navigation/detection";
+import { isArrived, isLocationOffRoute } from "../features/navigation/proximityDetection";
 import { useLocation } from "../hooks/useLocation";
 import { useRerouting } from "../hooks/useRerouting";
 import { useNavigationStore } from "../store/navigationStore";
@@ -24,6 +24,7 @@ export default function TripRoute() {
   const updateRouteMatch = useNavigationStore((state) => state.updateRouteMatch);
   const setOffRoute = useNavigationStore((state) => state.setOffRoute);
   const setNavigationStatus = useNavigationStore((state) => state.setNavigationStatus);
+  const remainingCheckpoints = useTripStore((state) => state.remainingCheckpoints);
   const { reroute } = useRerouting(userLocation);
   const [currentTime, setCurrentTime] = useState(Date.now());
   const sheetRef = useRef<BottomSheet>(null);
@@ -83,6 +84,10 @@ export default function TripRoute() {
           "miles"
       );
 
+      const updateLegsProgress = remainingCheckpoints(userLocation.coordinates);
+      
+      if (updateLegsProgress) { reroute(); }
+
       const match = matchLocationToRoute(
           userLocation.coordinates,
           navigationRoute.geometry
@@ -116,7 +121,7 @@ export default function TripRoute() {
           offRoute,
       });
 
-      if (offRoute) { reroute(); };
+      if (offRoute) { reroute(); }
 
       const timer = setInterval(() => setCurrentTime(Date.now()), 60000);
       return () => clearInterval(timer);
@@ -126,6 +131,7 @@ export default function TripRoute() {
       navigationRoute,
       navigationStatus,
       setNavigationStatus,
+      remainingCheckpoints,
       updateRouteMatch,
       setOffRoute,
       reroute,

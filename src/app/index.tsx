@@ -16,12 +16,12 @@ export default function MapScreen() {
   const mapRef = useRef<MapComponentRef | null>(null);
 
   useEffect(() => {
-    if (!userLocation || origin) return;
+    if (!userLocation) return;
     setOrigin(userLocation.coordinates);
   }, [userLocation, origin, setOrigin]);
-
+  
   useEffect(() => {
-    if (!errorMsg) return;
+    if (!errorMsg) { return; }
     Alert.alert(
       "Location Unavailable",
       errorMsg

@@ -6,7 +6,7 @@ import { useTripStore } from "../store/tripStore";
 export function useNavigationEnd() {
     const originCoords = useTripStore((state) => state.origin);
     const destination = useTripStore((state) => state.destination);
-    const checkpoints = useTripStore((state) => state.checkpoints);
+    const checkpoints = useTripStore((state) => state.totalCheckpoints);
     const navigationRoute = useNavigationStore((state) => state.navigationRoute);
     const liveLocation = useNavigationStore((state) => state.liveLocation);
     const transportMode = useTripStore((state) => state.transportMode);
@@ -24,7 +24,7 @@ export function useNavigationEnd() {
             !navigationStartedAt
         ) {
             console.log(
-                "[Navigation] Cannot save trip: missing navigation data"
+                "[NavigationEnd] Cannot save trip: missing navigation data"
             );
 
             return false;
@@ -55,7 +55,7 @@ export function useNavigationEnd() {
             const tripId = await saveTrip(trip, navigationRoute.legs);
 
             console.log(
-                "[Navigation] Trip saved:",
+                "[NavigationEnd] Trip saved:",
                 tripId
             );
 
@@ -65,7 +65,7 @@ export function useNavigationEnd() {
 
         } catch (error) {
             console.error(
-                "[Navigation] Failed to save trip:",
+                "[NavigationEnd] Failed to save trip:",
                 error
             );
 

@@ -8,7 +8,7 @@ import { useRoute } from "./useRoute";
 export function usePreviewRoute() {
     const origin = useTripStore((state) => state.origin);
     const destination = useTripStore((state) => state.destination);
-    const checkpoints = useTripStore((state) => state.checkpoints);
+    const checkpoints = useTripStore((state) => state.totalCheckpoints);
     const transportMode = useTripStore((state) => state.transportMode);
 
     const request = origin && destination

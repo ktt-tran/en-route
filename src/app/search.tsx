@@ -2,7 +2,7 @@ import { useSearch } from "@/src/hooks/useSearch";
 import { router, useFocusEffect } from "expo-router";
 import { useCallback, useRef, useState } from 'react';
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
-import TripStops from "../components/trip/TripStops";
+import TripCalculation from "../components/trip/TripCalculation";
 import { useTripStore } from "../store/tripStore";
 import { generateId } from "../utils/id-generator";
 
@@ -11,7 +11,7 @@ export default function SearchPage(){
   const isLeavingSearch = useRef(false);
   const { results, loading, error } = useSearch(query);
   const destination = useTripStore((state) => state.destination);
-  const checkpoints = useTripStore((state) => state.checkpoints);
+  const checkpoints = useTripStore((state) => state.totalCheckpoints);
   const clearDestination = useTripStore((state) => state.clearDestination);
   const setDestination = useTripStore((state) => state.setDestination);
   const addCheckpoint = useTripStore((state) => state.addCheckpoint);
@@ -96,8 +96,7 @@ export default function SearchPage(){
                                         id: generateId(),
                                         placeId: {
                                             name: result.name,
-                                            coordinates:
-                                                result.coordinates,
+                                            coordinates: result.coordinates,
                                         },
                                         order:
                                             checkpoints.length,
@@ -118,8 +117,7 @@ export default function SearchPage(){
                                 onPress={() => {
                                     setDestination({
                                         name: result.name,
-                                        coordinates:
-                                            result.coordinates,
+                                        coordinates: result.coordinates,
                                     });
 
                                     setQuery("");
@@ -143,7 +141,7 @@ export default function SearchPage(){
         {/* Trip */}
         
           {destination && (
-              <TripStops onPreviewRoute={() => {
+              <TripCalculation onPreviewRoute={() => {
                 isLeavingSearch.current=true;
                 router.back();
               }} />
