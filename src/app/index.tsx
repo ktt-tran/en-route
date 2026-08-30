@@ -16,7 +16,7 @@ export default function MapScreen() {
   const mapRef = useRef<MapComponentRef | null>(null);
 
   useEffect(() => {
-    if (!userLocation) return;
+    if (!userLocation) { return; }
     setOrigin(userLocation.coordinates);
   }, [userLocation, origin, setOrigin]);
   

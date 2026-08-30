@@ -24,7 +24,7 @@ interface TripStore {
     transportMode: TransportMode;
 
     // Route planning mode
-    routePlanningMode: RoutePlanningMode;
+    routeMode: RoutePlanningMode;
 
     // Origin / destination
     setOrigin: (origin: Coordinates) => void;
@@ -37,12 +37,13 @@ interface TripStore {
     setTransportMode: (mode: TransportMode) => void;
 
     // Mode
-    setPlanningMode: (mode: RoutePlanningMode) => void;
+    setRouteMode: (mode: RoutePlanningMode) => void;
 
     // Checkpoints
     addCheckpoint: (checkpoint: Checkpoint) => void;
     removeCheckpoint: (id: string) => void;
     updateCheckpoint: (id: string, updates: Partial<Omit<Checkpoint, "id">>) => void;
+    setCheckpoints: (checkpoints: Checkpoint[]) => void;
     reorderCheckpoints: (checkpoints: Checkpoint[]) => void;
 
     // Navigation checkpoint progress
@@ -58,7 +59,7 @@ export const useTripStore = create<TripStore>((set, get) => ({
     totalCheckpoints: [],
     unfinishedCheckpoints: [],
     transportMode: "auto",
-    routePlanningMode: "exact",
+    routeMode: "exact",
 
     setOrigin: (origin) => set({ origin }),
     clearOrigin: () => set({ origin: null }),
@@ -68,7 +69,7 @@ export const useTripStore = create<TripStore>((set, get) => ({
 
     setTransportMode: (transportMode) => set({ transportMode }),
 
-    setPlanningMode: (routePlanningMode) => set({ routePlanningMode }),
+    setRouteMode: (routeMode) => set({ routeMode }),
 
     addCheckpoint: (checkpoint) =>
         set((state) => ({
@@ -147,6 +148,12 @@ export const useTripStore = create<TripStore>((set, get) => ({
                             : checkpoint
                 ),
         })),
+
+    setCheckpoints: (checkpoints) =>
+        set({
+            totalCheckpoints: checkpoints,
+            unfinishedCheckpoints: checkpoints,
+        }),
 
     reorderCheckpoints: (checkpoints) =>
         set((state) => {
@@ -248,6 +255,6 @@ export const useTripStore = create<TripStore>((set, get) => ({
             totalCheckpoints: [],
             unfinishedCheckpoints: [],
             transportMode: "auto",
-            routePlanningMode: "exact",
+            routeMode: "exact",
         }),
 }));

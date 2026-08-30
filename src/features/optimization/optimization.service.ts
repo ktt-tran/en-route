@@ -1,7 +1,7 @@
 import { api } from "@/src/api/client";
-import { OptimizationRequest, OptimizedRoute } from "./optimization.types";
+import { RouteRequest, RouteResponse } from "../routing/routing.types";
 
-export async function fetchOptimizedRoute(request: OptimizationRequest): Promise<OptimizedRoute> {
+export async function fetchOptimizedRoute(request: RouteRequest): Promise<RouteResponse> {
     const response = await api.post("/optimization", request);
 
     return response.data;

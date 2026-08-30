@@ -2,9 +2,8 @@ import { useNavigationStore } from "@/src/store/navigationStore";
 import { useCallback, useRef } from "react";
 import { UserLocation } from "../features/location/location.types";
 import { buildRouteRequest } from "../features/routing/route.builder";
-import { fetchRoute } from "../features/routing/routing.service";
-import { RouteRequest } from "../features/routing/routing.types";
 import { useTripStore } from "../store/tripStore";
+import { useRoute } from "./useRoute";
 
 export function useRerouting(userLocation: UserLocation | null) {
     const destination = useTripStore((state) => state.destination);
@@ -14,25 +13,28 @@ export function useRerouting(userLocation: UserLocation | null) {
     const setRerouting = useNavigationStore((state) => state.setRerouting);
     const reroutingRef = useRef(false);
 
+    const request = 
+        userLocation && destination
+            ? buildRouteRequest({
+                origin: userLocation.coordinates,
+                checkpoints,
+                destination,
+                transportMode,
+            }): undefined;
+
+    const { refetch } = useRoute(request);
+
     const reroute = useCallback(async (): Promise<boolean> => {
         if (reroutingRef.current) { return false; }
-        if (!userLocation || !destination) { return false; }
+        if (!request) { return false; }
 
         reroutingRef.current = true;
         setRerouting(true);
 
         try {
-
-            const request: RouteRequest = buildRouteRequest({
-                origin: userLocation.coordinates,
-                checkpoints,
-                destination,
-                transportMode,
-            });
-
-            const route = await fetchRoute(request);
-
-            updateNavigationRoute(route);
+            const result = await refetch();
+            if(!result.data) { return false; }
+            updateNavigationRoute(result.data);
 
             return true;
         } catch (error) {
@@ -44,9 +46,8 @@ export function useRerouting(userLocation: UserLocation | null) {
             setRerouting(false);
         }
     }, [
-        userLocation,
-        destination,
-        transportMode,
+        request,
+        refetch,
         updateNavigationRoute,
         setRerouting,
     ]);

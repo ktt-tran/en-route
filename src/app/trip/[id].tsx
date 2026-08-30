@@ -87,7 +87,7 @@ export default function TripDetails() {
       </View>
 
       <View className="p-5">
-        <TripControls onDelete={handleDelete} deleting={isDeleting} />
+        <TripControls onDelete={handleDelete} deleting={isDeleting} tripId={tripId} />
       </View>
     </View>
   );

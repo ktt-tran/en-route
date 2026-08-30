@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from app.api import search, routing
+from app.api import search, routing, optimization
 
 app = FastAPI(title="En Route API")
 
@@ -20,6 +20,7 @@ app.add_middleware(
 
 app.include_router(search.router, prefix="/api")
 app.include_router(routing.router, prefix="/api")
+app.include_router(optimization.router, prefix="/api")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

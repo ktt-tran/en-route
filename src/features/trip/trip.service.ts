@@ -1,7 +1,7 @@
 import { getDatabase } from "@/src/database/sqlite-database";
 import type { RouteLeg, TransportMode } from "@/src/features/routing/routing.types";
 import { TripRouteLeg } from "@/src/features/trip/trip.types";
-import { getCheckpoints, saveCheckpoint } from "../checkpoint/checkpoint.service";
+import { getCheckpointsByTripId, saveCheckpoint } from "../checkpoint/checkpoint.service";
 import { Checkpoint } from "../checkpoint/checkpoint.types";
 import { getTripLegs, saveTripLegs } from "./trip-leg.service";
 import type { TripHistory } from "./trip.types";
@@ -172,7 +172,7 @@ export async function getRecentTrips(limit = 20): Promise<TripHistory[]> {
 
     return Promise.all(
         rows.map(async (row) => {
-            const checkpoints = await getCheckpoints(row.id);
+            const checkpoints = await getCheckpointsByTripId(row.id);
             const legs = await getTripLegs(row.id);
 
             return mapTripRow(
@@ -198,7 +198,7 @@ export async function getTripById(id: number): Promise<TripHistory | null> {
 
     if (!row) { return null; }
 
-    const checkpoints = await getCheckpoints(row.id);
+    const checkpoints = await getCheckpointsByTripId(row.id);
 
     const legs = await getTripLegs(id);
 

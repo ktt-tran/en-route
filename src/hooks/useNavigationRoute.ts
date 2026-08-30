@@ -1,7 +1,7 @@
 import { useNavigationStore } from "@/src/store/navigationStore";
 import { buildRouteRequest } from "../features/routing/route.builder";
-import { fetchRoute } from "../features/routing/routing.service";
 import { useTripStore } from "../store/tripStore";
+import { useRoute } from "./useRoute";
 
 export function useNavigationRoute() {
     const origin = useTripStore((state) => state.origin);
@@ -10,25 +10,31 @@ export function useNavigationRoute() {
     const transportMode = useTripStore((state) => state.transportMode);
     const startNavigation = useNavigationStore((state) => state.startNavigation);
 
-    async function beginNavigation(): Promise<boolean> {
-        if (!destination) { return false; }
+    const request = 
+        origin && destination
+            ? buildRouteRequest({
+                origin,
+                checkpoints,
+                destination,
+                transportMode,
+            }) : undefined;
 
-        const request = buildRouteRequest({
-            origin,
-            checkpoints,
-            destination,
-            transportMode,
-        });
+    const { refetch, isLoading, error } = useRoute(request);
+
+    async function beginNavigation(): Promise<boolean> {
+        if (!request) { return false; }
 
         try {
-            const route = await fetchRoute(request);
-            const started = startNavigation(route);
-            if (!started) { return false; }
-            return true;
+            const result = await refetch();
+            if (!result.data) { return false; }
+            const started = startNavigation(result.data);
+
+            return started;
         } catch (error) {
+            console.log("[Navigation] failed:", error);
             return false;
         }
     }
 
-    return { beginNavigation };
+    return { beginNavigation, isLoading, error };
 }   

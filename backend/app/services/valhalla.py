@@ -88,12 +88,12 @@ class ValhallaService:
                 #
                 # Preserve full route data
                 #
-
                 full_geometry.extend(leg_geometry)
 
             return RouteResponse(
-            distance_miles=summary["length"],
-            duration_seconds=summary["time"],
-            geometry=full_geometry,
-            legs=legs,
-        )
+                fullRoute=request.locations,
+                distance_miles=summary["length"],
+                duration_seconds=summary["time"],
+                geometry=full_geometry,
+                legs=legs,
+            )

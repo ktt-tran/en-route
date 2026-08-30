@@ -35,8 +35,8 @@ export function PreviewControls({ route, isLoading, error }: RoutePreviewSheetPr
   const clearDestination = useTripStore((state) => state.clearDestination);
   const canStartNavigation = !!destination && !!route && !isLoading && !error;
   
-  // the user location can change during the route preview and if it does the route should
-  // be recalculated using the newest user origin position.
+  // the user location can change during the route preview and if it does the 
+  // route should be recalculated using the newest user origin position.
   const { beginNavigation } = useNavigationRoute();
 
   return (

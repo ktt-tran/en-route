@@ -91,6 +91,7 @@ export default function SearchPage(){
 
                             <Pressable
                                 className="px-4 py-3 bg-gray-200 rounded-lg"
+                                disabled={alreadyCheckpoint}
                                 onPress={() => {
                                     addCheckpoint({
                                         id: generateId(),

@@ -52,7 +52,7 @@ export async function saveCheckpoint(tripId: number, checkpoint: Checkpoint): Pr
     
 }
 
-export async function getCheckpoints(tripId: number): Promise<Checkpoint[]> {
+export async function getCheckpointsByTripId(tripId: number): Promise<Checkpoint[]> {
     const db = await getDatabase();
 
     const rows = await db.getAllAsync<CheckpointRow>(

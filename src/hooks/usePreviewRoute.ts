@@ -11,13 +11,14 @@ export function usePreviewRoute() {
     const checkpoints = useTripStore((state) => state.totalCheckpoints);
     const transportMode = useTripStore((state) => state.transportMode);
 
-    const request = origin && destination
-    ? buildRouteRequest({
-        origin,
-        checkpoints,
-        destination,
-        transportMode,
-    }): undefined;
+    const request = 
+        origin && destination
+            ? buildRouteRequest({
+                origin,
+                checkpoints,
+                destination,
+                transportMode,
+            }): undefined;
 
     return useRoute(request)
 

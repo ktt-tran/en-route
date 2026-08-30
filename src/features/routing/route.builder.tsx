@@ -10,8 +10,8 @@ interface TripRoutingInput {
 }
 
 export function buildRouteRequest(trip: TripRoutingInput): RouteRequest {
-    if (!trip.origin) { throw new Error("Origin is required."); }
-    if (!trip.destination) { throw new Error("Destination is required."); }
+    if (!trip.origin) { throw new Error("[RouteBuilder] Origin is required."); }
+    if (!trip.destination) { throw new Error("[RouteBuilder] Destination is required."); }
     
 
     const orderedCheckpoints = [...trip.checkpoints]

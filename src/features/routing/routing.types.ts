@@ -18,7 +18,7 @@ export interface RouteLeg {
 }
 
 export interface RouteResponse {
-    //fullRoute: Coordinates[];
+    fullRoute: Coordinates[];
     distance_miles: number;
     duration_seconds: number;
     geometry: Coordinates[];

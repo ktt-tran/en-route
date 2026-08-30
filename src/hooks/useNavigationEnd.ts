@@ -12,6 +12,7 @@ export function useNavigationEnd() {
     const transportMode = useTripStore((state) => state.transportMode);
     const navigationStartedAt = useNavigationStore((state) => state.navigationStartedAt);
     const arrived = useNavigationStore((state) => state.arrivalDetected);
+    const setRouteMode = useTripStore((state) => state.setRouteMode);
     const stopNavigation = useNavigationStore((state) => state.stopNavigation);
     
 
@@ -70,6 +71,8 @@ export function useNavigationEnd() {
             );
 
         }
+
+        setRouteMode("exact");
     }
 
     return { commitNavigation };

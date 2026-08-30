@@ -6,7 +6,7 @@ export default function TripCalculation({onPreviewRoute}: {onPreviewRoute:() => 
     const origin = useTripStore((state) => state.origin);
     const destination = useTripStore((state) => state.destination);
     const checkpoints = useTripStore((state) => state.totalCheckpoints);
-    const setRoutePlanningMode = useTripStore((state) => state.setPlanningMode);
+    const setRouteMode = useTripStore((state) => state.setRouteMode);
     const removeCheckpoint = useTripStore((state) => state.removeCheckpoint);
     const reorderCheckpoints = useTripStore((state) => state.reorderCheckpoints);
 
@@ -168,14 +168,14 @@ export default function TripCalculation({onPreviewRoute}: {onPreviewRoute:() => 
                                 {
                                     text: "Exact Order",
                                     onPress: () => {
-                                        setRoutePlanningMode("exact");
+                                        setRouteMode("exact");
                                         onPreviewRoute();
                                     },
                                 },
                                 {
                                     text: "Optimize",
                                     onPress: () => {
-                                        setRoutePlanningMode("optimize");
+                                        setRouteMode("optimize");
                                         onPreviewRoute();
                                     },
                                 },
