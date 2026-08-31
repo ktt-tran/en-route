@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from app.services.valhalla import ValhallaService
-from app.services.optimization_layer.calculation import OptimizationService
+from app.services.optimization.calculation import OptimizationService
 from app.schemas.routing import (RouteRequest, RouteResponse)
 from app.config import settings
 

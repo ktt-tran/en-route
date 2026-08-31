@@ -1,7 +1,7 @@
 import httpx
 import polyline
 from app.schemas.coordinates import Coordinates
-from app.schemas.routing import (RouteRequest, TransportMode, RouteResponse, RouteLeg)
+from app.schemas.routing import (RouteRequest, RouteResponse, RouteLeg, TransportMode)
 
 
 VALHALLA_COSTING = {
@@ -75,6 +75,7 @@ class ValhallaService:
 
                 #
                 #Build RouteLeg
+                #
                 leg = RouteLeg(
                     from_location = _from_location,
                     to_location = _to_location,
