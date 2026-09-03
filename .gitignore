@@ -10,6 +10,8 @@ docker/valhalla/data/tiles/
 docker/valhalla/data/tiles.tar
 docker/valhalla/data/admins.sqlite
 docker/valhalla/data/timezones.sqlite
+docker/valhalla/Dockerfile
+docker/valhalla/entrypoint.sh
 src/utils/database-wipe.ts
 src/Phase3/
 EN-ROUTE/

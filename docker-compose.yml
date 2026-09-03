@@ -1,9 +1,25 @@
 services:
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: enroute-backend
+    ports:
+      - "${BACKEND_PORT}:8000"
+    environment:
+      NOMINATIM_URL: ${NOMINATIM_URL}
+      VALHALLA_URL: ${VALHALLA_URL}
+    depends_on:
+      - nominatim
+      - valhalla
+    restart: unless-stopped
+
   nominatim:
     image: mediagis/nominatim:5.1
     container_name: enroute-nominatim
     ports:
-      - "8080:8080"
+      - "${NOMINATIM_PORT}:8080"
     environment:
       PBF_PATH: /nominatim/data/maryland-latest.osm.pbf
       THREADS: 4
@@ -13,10 +29,14 @@ services:
     restart: unless-stopped
 
   valhalla:
-    image: ghcr.io/valhalla/valhalla:3.8.3
+    build:
+      context: ./docker/valhalla
+      dockerfile: Dockerfile
     container_name: enroute-valhalla
     ports:
-      - "8002:8002"
+      - "${VALHALLA_PORT}:8002"
+    environment:
+      OSM_PBF: ${PBF_FILE}
     volumes:
       - ./map-data:/osm:ro
       - ./docker/valhalla/config:/config
