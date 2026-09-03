@@ -14,6 +14,7 @@ docker/valhalla/Dockerfile
 docker/valhalla/entrypoint.sh
 src/utils/database-wipe.ts
 src/Phase3/
+scripts/
 EN-ROUTE/
 map-data/
 scripts/build-valhalla.sh
