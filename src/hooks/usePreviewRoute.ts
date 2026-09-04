@@ -1,6 +1,6 @@
 import { buildRouteRequest } from "../features/routing/route.builder";
+import { useRoute } from "../lib/routeCore";
 import { useTripStore } from "../store/tripStore";
-import { useRoute } from "./useRoute";
 
 // instead of waiting to calculate route only when the user begins the destination,
 // the route is calculated when the selected destination changes and stored in 

@@ -32,6 +32,8 @@ interface NavigationStore {
     arrivalDetected: boolean;
 
     // timestamp data
+    fullDistance: number,
+    fullDuration: number,
     navigationStartedAt: number | null;
     navigationEndedAt: number | null;
     
@@ -69,6 +71,9 @@ export const useNavigationStore = create<NavigationStore>((set, get) => ({
     navigationStatus: "idle",
     arrivalDetected: false,
 
+    
+    fullDistance: 0,
+    fullDuration: 0,
     navigationStartedAt: null,
     navigationEndedAt: null,
     
@@ -128,6 +133,8 @@ export const useNavigationStore = create<NavigationStore>((set, get) => ({
 
         set({
             navigationRoute: route,
+            fullDistance: route.distance_miles,
+            fullDuration: route.duration_seconds,
             navigationStatus: "navigating",
             navigationActive: true,
             navigationStartedAt: Date.now(),

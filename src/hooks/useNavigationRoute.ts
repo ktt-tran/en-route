@@ -1,7 +1,8 @@
 import { useNavigationStore } from "@/src/store/navigationStore";
 import { buildRouteRequest } from "../features/routing/route.builder";
+import { useRoute } from "../lib/routeCore";
 import { useTripStore } from "../store/tripStore";
-import { useRoute } from "./useRoute";
+
 
 export function useNavigationRoute() {
     const origin = useTripStore((state) => state.origin);

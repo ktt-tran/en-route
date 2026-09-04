@@ -12,6 +12,8 @@ export function useNavigationEnd() {
     const transportMode = useTripStore((state) => state.transportMode);
     const navigationStartedAt = useNavigationStore((state) => state.navigationStartedAt);
     const arrived = useNavigationStore((state) => state.arrivalDetected);
+    const fullDistance = useNavigationStore((state) => state.fullDistance);
+    const fullDuration = useNavigationStore((state) => state.fullDuration);
     const setRouteMode = useTripStore((state) => state.setRouteMode);
     const stopNavigation = useNavigationStore((state) => state.stopNavigation);
     
@@ -45,8 +47,8 @@ export function useNavigationEnd() {
                 checkpoints,
                 destination,
                 finalLocation: liveLocation,
-                distanceMiles: navigationRoute.distance_miles,
-                durationSeconds: navigationRoute.duration_seconds,
+                distanceMiles: fullDistance,
+                durationSeconds: fullDuration,
                 transportMode,
                 startedAt: navigationStartedAt,
                 endedAt,

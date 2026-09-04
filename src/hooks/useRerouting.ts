@@ -2,8 +2,8 @@ import { useNavigationStore } from "@/src/store/navigationStore";
 import { useCallback, useRef } from "react";
 import { UserLocation } from "../features/location/location.types";
 import { buildRouteRequest } from "../features/routing/route.builder";
+import { useRoute } from "../lib/routeCore";
 import { useTripStore } from "../store/tripStore";
-import { useRoute } from "./useRoute";
 
 export function useRerouting(userLocation: UserLocation | null) {
     const destination = useTripStore((state) => state.destination);

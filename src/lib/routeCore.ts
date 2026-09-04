@@ -5,8 +5,8 @@ import { reorderCheckpointsFromRoute } from "../features/checkpoint/checkpoint.m
 import { fetchOptimizedRoute } from "../features/optimization/optimization.service";
 import { useTripStore } from "../store/tripStore";
 
-// Backend API fetch hook returns function that stores the route data until it is 
-// updated or gets accessed for the routing information.
+// Backend API fetch hook returns function that stores the route data   
+// until it is updated or gets accessed for the routing information.
 export function useRoute(request?: RouteRequest) {
     const checkpoints = useTripStore((state) => state.totalCheckpoints);
     const routeMode = useTripStore((state) => state.routeMode);
