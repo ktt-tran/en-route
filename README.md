@@ -2,9 +2,9 @@
   <img src="./public/ICON.png" alt="En Route" width="180" />
 </p>
 
-<p align="center">
+<h3 align="center">
   Full-stack navigation and trip optimization application.
-</p>
+</h3>
 
 # En Route
 
