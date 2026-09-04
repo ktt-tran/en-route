@@ -2,7 +2,7 @@
 
 Copyright (c) 2026 En Route
 
-# MIT Licence
+## MIT Licence
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-# Third-Party Data and Software
+## Third-Party Data and Software
 
 En Route uses third-party software and data, including OpenStreetMap,
 Nominatim, Valhalla, React Native, Expo, FastAPI, MapLibre, and SQLite.
